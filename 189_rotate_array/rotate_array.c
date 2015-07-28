@@ -57,7 +57,7 @@ void rotate(int * nums, int numsSize, int k) {
   if (k == 0)
     return;
 
-  // Rotate the array around the axis which is just before the kth from the end.
+  // Rotate the array around the axis which is just before the kth element from the end.
   // For example, 1 2 3 4 5 | 6 7, k=2, two lines below rotate the array
   // around the axis between '5' and '6'.
   reverse(nums, 0, numsSize-1-k);
