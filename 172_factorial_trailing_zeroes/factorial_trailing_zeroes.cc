@@ -12,7 +12,7 @@ Note: Your solution should be in logarithmic time complexity.
 #include <string>
 #include <cstdlib>
 
-// Version 0: Not so efficient.
+// Solution 0: Not so efficient.
 //int trailingZeroes(int n) {
 //  if (n <= 0)
 //    return 0;
@@ -33,7 +33,7 @@ Note: Your solution should be in logarithmic time complexity.
 //  return rtn;
 //}
 
-// Version 1.
+// Solution 1.
 int trailingZeroes(int n) {
   if (n <= 0)
     return 0;

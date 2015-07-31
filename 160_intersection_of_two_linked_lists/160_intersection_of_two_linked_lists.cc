@@ -42,7 +42,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-// Version 0: A easy-to-understand method.
+// Solution 0: A easy-to-understand method.
 //ListNode * getIntersectionNode(ListNode * headA, ListNode * headB) {
 //  if (headA==NULL || headB==NULL)
 //    return NULL;
@@ -81,7 +81,7 @@ struct ListNode {
 //  return lna;
 //}
 
-// Version 1: A smarter method from LeetCode. (But slower according to the LeetCode Online Judge. Why?)
+// Solution 1: A smarter method from LeetCode. (But slower according to the LeetCode Online Judge. Why?)
 ListNode * getIntersectionNode(ListNode * headA, ListNode * headB) {
   if (headA==NULL || headB==NULL)
     return NULL;

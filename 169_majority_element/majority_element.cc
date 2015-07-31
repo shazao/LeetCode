@@ -13,13 +13,13 @@ You may assume that the array is non-empty and the majority element always exist
 #include <cstdlib>
 #include <algorithm>
 
-// Version 0: Using sorting, O(nlogn).
+// Solution 0: Using sorting, O(nlogn).
 //int majorityElement(std::vector<int> & nums) {
 //  sort(nums.begin(), nums.end());
 //  return nums[nums.size()/2];
 //}
 
-// Version 1: Moore Vorting Algorithm.
+// Solution 1: Moore Vorting Algorithm.
 // Info.: https://leetcode.com/discuss/19151/solution-computation-space-problem-can-extended-situation 
 int majorityElement(std::vector<int> & nums) {
   int candidate;

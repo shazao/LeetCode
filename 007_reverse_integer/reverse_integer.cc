@@ -7,7 +7,7 @@ Example2: x = -123, return -321 */
 
 // Star: 6.5.
 
-// Version 0;
+// Solution 0;
 //int reverse(int x) {
 //
 //  int y = x>0 ? x : -x;   // Cannot handle INT_MIN. (INT_MAX+1 == INT_MIN)
@@ -28,7 +28,7 @@ Example2: x = -123, return -321 */
 //  return x>0 ? s : -s;
 //}
 
-// Version 1.
+// Solution 1.
 //int reverse(int x) {
 //
 //   unsigned int y = x>0 ? x : -x;
@@ -49,7 +49,7 @@ Example2: x = -123, return -321 */
 //   return x>0 ? s : -s;
 //}
 
-// Version 2(It's also not so good I think.).
+// Solution 2(It's also not so good I think.).
 int reverse(int x) {
 
    unsigned int y = x>0 ? x : -x;

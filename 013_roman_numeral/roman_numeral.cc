@@ -7,7 +7,7 @@ Input is guaranteed to be within the range from 1 to 3999. */
 
 // Star: 6.5.
 
-// Version 0: Not so efficient.
+// Solution 0: Not so efficient.
 //int rtoi(char c) {
 //  switch (c) {
 //    case 'I': return 1;

@@ -8,7 +8,7 @@ Each time you can either climb 1 or 2 steps. In how many distinct ways can you c
 #include <stdlib.h>
 #include <string.h>
 
-// Version 0: Not efficient("Time Limit Exceeded").
+// Solution 0: Not efficient("Time Limit Exceeded").
 //int climbStairs(int n) {
 //
 //  if (n == 1)       // Note 0: Termination condition(Acctually, for all the recursive functions).
@@ -21,7 +21,7 @@ Each time you can either climb 1 or 2 steps. In how many distinct ways can you c
 //
 //}
 
-// Version 1: Fabonacci sequence.
+// Solution 1: Fabonacci sequence.
 int climbStairs(int n) {
 
   if (n == 1)

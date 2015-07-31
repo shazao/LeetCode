@@ -11,7 +11,7 @@ or -1 if needle is not part of haystack. */
 // Info.: Version 1, one-time pass.
 
 
-// Version 0: A direct method.
+// Solution 0: A direct method.
 //int strStr(char* haystack, char* needle) {
 //	
 //	if (*needle == '\0')
@@ -27,7 +27,7 @@ or -1 if needle is not part of haystack. */
 //		if (haystack[index] != *needle)
 //			++ index;
 //		else {
-//      // Method 0.
+//      // Solution 0.
 //			pn = needle + 1;
 //			ph = &haystack[index+1];
 //			while (*pn && *ph)
@@ -41,7 +41,7 @@ or -1 if needle is not part of haystack. */
 //				}
 //			if (*pn == '\0')
 //				return index;
-//      // Method 1.
+//      // Solution 1.
 //			//pn = needle;
 //			//ph = &haystack[index];
 //			//for (; *pn==*ph; ++pn, ++ph)
@@ -55,7 +55,7 @@ or -1 if needle is not part of haystack. */
 //	return -1;
 //}
 
-// Version 1: Using two pointers, a front one and a rear one, moving torwards each other.
+// Solution 1: Using two pointers, a front one and a rear one, moving torwards each other.
 int strStr(char* haystack, char* needle) {
 
   if (*needle == '\0')

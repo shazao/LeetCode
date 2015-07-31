@@ -14,7 +14,7 @@ return 5. */
 #include <string.h>
 
 
-// Version 0: Forward traversal.
+// Solution 0: Forward traversal.
 //int lengthOfLastWord(char * s) {
 //
 //  if (s == NULL)
@@ -34,7 +34,7 @@ return 5. */
 //  return front - rear;
 //}
 
-// Version 1: Backward traversal.
+// Solution 1: Backward traversal.
 int lengthOfLastWord(char * s) {
 
   if (s==NULL)

@@ -19,7 +19,7 @@ For the purpose of this problem, we define empty string as valid palindrome.
 // Star: 7.5.
 // Info.: Not easy to get through.
 
-// Version 0: A little awkward.
+// Solution 0: A little awkward.
 //bool isAlpabet(char c) {
 //  if ((c>='a' && c<='z') || (c>='A' && c<='Z'))
 //    return true;
@@ -61,7 +61,7 @@ For the purpose of this problem, we define empty string as valid palindrome.
 //  return true;
 //}
 
-// Version 1: Convert upper case to lower case.
+// Solution 1: Convert upper case to lower case.
 bool isAlphanumeric(char c) {
   if ((c>='a' && c<='z') || (c>='0' && c<='9'))
     return true;

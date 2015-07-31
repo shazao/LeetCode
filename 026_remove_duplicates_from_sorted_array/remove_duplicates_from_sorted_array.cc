@@ -14,7 +14,7 @@ It doesn't matter what you leave beyond the new length. */
 #include <iostream>
 #include <vector>
 
-// Version 0: Thouht that using 'erase()' can avoid overlapping effort, but O(n^2) also leads to 'TIME LIMIT EXCEEDED'.
+// Solution 0: Thouht that using 'erase()' can avoid overlapping effort, but O(n^2) also leads to 'TIME LIMIT EXCEEDED'.
 //int removeDuplicates(std::vector<int>& nums) {
 //
 //  size_t size = nums.size();
@@ -34,7 +34,7 @@ It doesn't matter what you leave beyond the new length. */
 //  return size;
 //}
 
-// Version 1.
+// Solution 1.
 int removeDuplicates(std::vector<int>& nums) {
   int size = nums.size();
   if (size==0 || size==1)

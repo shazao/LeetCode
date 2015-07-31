@@ -13,7 +13,7 @@ It doesn't matter what you leave beyond the new length. */
 
 #include <stdio.h>
 
-// Version 0: Non-sorted version(wrong).
+// Solution 0: Non-sorted version(wrong).
 //void swap(int *a, int *b) {
 //  int tmp = *a;
 //  *a = *b;
@@ -42,7 +42,7 @@ It doesn't matter what you leave beyond the new length. */
 //  return length;
 //}
 
-// Version 1, correct answer but 'TIME LIMIT EXCEEDED'(Overlapping exhaust time).
+// Solution 1, correct answer but 'TIME LIMIT EXCEEDED'(Overlapping exhaust time).
 //int removeDuplicates(int* nums, int numsSize) {
 //
 //  if (numsSize==0 || numsSize==1)
@@ -66,7 +66,7 @@ It doesn't matter what you leave beyond the new length. */
 //  return length;
 //}
 
-// Version 2: O(n), pass.
+// Solution 2: O(n), pass.
 int removeDuplicates(int* nums, int numsSize) {
 
   if (numsSize==0 || numsSize==1)

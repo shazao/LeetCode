@@ -12,7 +12,7 @@ The digits are stored such that the most significant digit is at the head of the
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-// Version 0.
+// Solution 0.
 //int * plusOne(int * digits, int digitsSize, int * returnSize) {
 //    
 //    if (digitsSize <= 0)
@@ -52,7 +52,7 @@ The digits are stored such that the most significant digit is at the head of the
 //    return rtn;    	
 //}
 
-// Version 1.
+// Solution 1.
 int * plusOne(int * digits, int digitsSize, int * returnSize) {
     
     if (digitsSize <= 0)

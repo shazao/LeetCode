@@ -4,7 +4,7 @@
 
 // Star: 7.
 
-// Version 0: Not so efficient.
+// Solution 0: Not so efficient.
 //bool isPalindrome(int x) {
 //
 //  if (x < 0) 
@@ -32,7 +32,7 @@
 //  return true;
 //}
 
-// Version 1.
+// Solution 1.
 bool isPalindrome(int x) {
 
   if (x < 0) 

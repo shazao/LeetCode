@@ -15,7 +15,7 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 #include <stdbool.h>
 
 
-// Version 0.
+// Solution 0.
 //void rotate(int* nums, int numsSize, int k) {
 //  if (numsSize<=0 || k<=0)
 //    return;
@@ -35,7 +35,7 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 //  free(new_arr);
 //}
 
-// Version 1: In-place.
+// Solution 1: In-place.
 void swap(int * a, int * b) {
   int tmp = *a;
   *a = *b;
@@ -90,5 +90,7 @@ void main(int argc, char * argv[]) {
   for (i=0; i<argc-2; ++i)
     printf("%d ", arr[i]);
   printf("\n");
+
+  free(arr);
 
 }

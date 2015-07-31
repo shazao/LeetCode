@@ -13,7 +13,7 @@ The minimum depth is the number of nodes along the shortest path from the root n
  * };
  */
 
-// Version 0: Not so efficient.
+// Solution 0: Not so efficient.
 int minDepth(struct TreeNode* root) {
     if (root == NULL)
         return 0;
@@ -29,7 +29,7 @@ int minDepth(struct TreeNode* root) {
         return (mdl>mdr ? mdl : mdr) + 1;
 }
 
-// Version 1.
+// Solution 1.
 int minDepth(struct TreeNode* root) {
     if (root == NULL)
         return 0;

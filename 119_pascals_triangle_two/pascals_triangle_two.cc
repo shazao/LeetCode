@@ -15,7 +15,7 @@ Could you optimize your algorithm to use only O(k) extra space?
 #include <string>
 #include <cstdlib>
 
-// Version 0: A straightforward method, but "long double" looks not so nice.
+// Solution 0: A straightforward method, but "long double" looks not so nice.
 //int cnm(int n, int m) {
 //  if (n<0 || m<0 || m>n)
 //    return 0;
@@ -51,7 +51,7 @@ Could you optimize your algorithm to use only O(k) extra space?
 //  return rtn;
 //}
 
-// Version 1: A smarter method, realizing in-place.
+// Solution 1: A smarter method, realizing in-place.
 std::vector<int> getRow(int rowIndex) {
   std::vector<int> rtn;
   if (rowIndex < 0)
