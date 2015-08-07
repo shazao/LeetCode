@@ -38,6 +38,26 @@ Count the number of prime numbers less than a non-negative number, n.
 
 // Solution 1: Sieve of Eratosthenes.
 int countPrimes(int n) {
+  if (n <= 1)
+    return 0;
+
+  bool * mark_table = (bool *)malloc(sizeof(bool) * n);
+  int i = 0;
+  for (; i<n; ++i)
+    mark_table[i] = true;
+
+  int j = 0;
+  int count = n-2;
+  for (i=2; i*i<n; ++i)
+    for (j=i*i; j<n; j+=i)
+      if (mark_table[j]) {      // To avoid another traversal to count the primes.
+        mark_table[j] = false;
+        -- count;
+      }
+
+  free(mark_table);
+  return count;
+}
 
 void main(int argc, char * argv[]) {
 
@@ -119,5 +139,40 @@ public int countPrimes(int n) {
       if (isPrime[i]) count++;
    }
    return count;
+}
+*/
+
+/* A more time efficient method from LeetCode Discuss:
+     1. trick1 is to use square root of n.
+     2.  trick2 is not to use non-prime numbers as the step
+     3. trick3 is to use i*i as the start. 
+     4. trick4 is to use count-- in every loop, avoiding another traversal.
+int countPrimes(int n) {
+    if(n <= 2) return 0;
+    if(n == 3) return 1;
+    bool *prime= (bool*)malloc(sizeof(bool)*n);
+    int i=0,j=0;
+    int count = n-2;
+    int rt = sqrt(n);//trick1
+    for(j = 0; j < n; j++)
+    {
+        prime[j] = 1;
+    }
+    for(i = 2; i <= rt; i++)
+    {
+         if (prime[i])//trick2
+        {
+            for(j=i*i ; j<n ; j+=i)//trick3
+            {
+                if (prime[j])
+                        {
+                           prime[j]=0;
+                           count--;//trick4
+                        }
+            }
+        }
+    }
+    free(prime);
+    return count;
 }
 */
