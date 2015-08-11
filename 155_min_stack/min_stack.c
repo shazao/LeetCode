@@ -128,7 +128,7 @@ void minStackDestroy(MinStack *stack) {   // Note 2: Arrange the deallocating co
 int main(int argc, char * argv[]) {
 
   if (argc != 1) {
-    printf("Please specify the correct parameter.\n");
+    printf("Please specify the correct arguments.\n");
     return 0;
   }
 

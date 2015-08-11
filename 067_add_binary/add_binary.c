@@ -67,7 +67,7 @@ char * addBinary(char * a, char * b) {
 int main(int argc, char * argv[]) {
 
   if (argc != 3) {
-    printf("Please specify the correct parameter.\n");
+    printf("Please specify the correct arguments.\n");
     return 0;
   }
 

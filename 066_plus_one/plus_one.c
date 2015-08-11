@@ -91,7 +91,7 @@ int * plusOne(int * digits, int digitsSize, int * returnSize) {
 int main(int argc, char * argv[]) {
 
   if (argc != 2) {
-    printf("Please specify the correct parameter.\n");
+    printf("Please specify the correct arguments.\n");
     return 0;
   }
 

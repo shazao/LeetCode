@@ -70,7 +70,7 @@ void rotate(int * nums, int numsSize, int k) {
 void main(int argc, char * argv[]) {
 
   if (argc < 3) {
-    printf("Please specify the correct parameter.\n");
+    printf("Please specify the correct arguments.\n");
     return;
   }
 

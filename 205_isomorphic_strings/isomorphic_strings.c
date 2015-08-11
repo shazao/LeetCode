@@ -87,7 +87,7 @@ bool isIsomorphic(char * s, char * t) {
 void main(int argc, char * argv[]) {
 
   if (argc != 3) {
-    printf("Please specify the correct parameter.\n");
+    printf("Please specify the correct arguments.\n");
     return;
   }
 

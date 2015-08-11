@@ -31,7 +31,7 @@ int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
 void main(int argc, char * argv[]) {
 
   if (argc != 9) {
-    printf("Please specify the correct parameter.\n");
+    printf("Please specify the correct arguments.\n");
     return;
   }
 

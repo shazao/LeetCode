@@ -34,7 +34,7 @@ void merge(int * nums1, int m, int * nums2, int n) {
 int main(int argc, char * argv[]) {
 
   if (argc != 3) {
-    printf("Please specify the correct parameter.\n");
+    printf("Please specify the correct arguments.\n");
     return 0;
   }
 
