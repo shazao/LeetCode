@@ -324,64 +324,70 @@ bool isSameTree(BtNode<T> * p, BtNode<T> * q) {
 int main(int argc, char * argv[]) {
 
   if (argc != 2)
-    std::cout << "Argument error!" << std::endl;
+    std::cout << "Argument error! Please input a integer to select a binary tree." << std::endl;
 
   int tree_idx = atoi(argv[1]);
   size_t node_width_for_display = 2;
   BtNode<char> * bt = buildBinaryTree(tree_idx);
 
-  std::cout << "You selected Tree " << tree_idx << std::endl;
+  std::cout << "You selected Binary Tree " << tree_idx << '.' << std::endl;
   bt->displayBinaryTree(node_width_for_display);
-  std::cout << "Number of leaves of Tree " << tree_idx << ": " << bt->countLeaf() << std::endl;
-  std::cout << "Depth of Tree " << tree_idx << ": " << bt->depth() << std::endl;
+  std::cout << "Number of leaves of Binary Tree " << tree_idx << ": " << bt->countLeaf() << '.' << std::endl;
+  std::cout << "Depth of Binary Tree " << tree_idx << ": " << bt->depth() << '.' << std::endl;
 
   BtNode<char> * cbt = bt->copyBinaryTree();
-  std::cout << "Copy of Tree " << tree_idx << ": " << std::endl;
+  std::cout << "Copy of Binary Tree " << tree_idx << ": " << std::endl;
   cbt->displayBinaryTree(node_width_for_display);
 
-  std::cout << "Tree " << tree_idx << " and its copy " << (isSameTree(bt, cbt) ? "is" : "is not") << " the same." << std::endl;
+  std::cout << "Binary Tree " << tree_idx << " and its copy " << (isSameTree(bt, cbt) ? "is" : "is not") << " the same." << std::endl;
   BtNode<char> * nbt = buildBinaryTree(tree_idx+1);
-  std::cout << "Tree " << tree_idx << std::endl;
+  std::cout << "Binary Tree " << tree_idx << std::endl;
   bt->displayBinaryTree(node_width_for_display);
-  std::cout << "and Tree " << tree_idx+1 << std::endl;
+  std::cout << "and Binary Tree " << tree_idx+1 << std::endl;
   nbt->displayBinaryTree(node_width_for_display);
   std::cout << std::endl << (isSameTree(bt, nbt) ? " is" : " is not") << " the same." << std::endl;
 
   BtNode<char> * sbt = buildBinaryTree(tree_idx);
-  std::cout << "Tree " << tree_idx << std::endl;
+  std::cout << "Binary Tree " << tree_idx << std::endl;
   sbt->displayBinaryTree(node_width_for_display);
-  std::cout << (sbt->isSymmetric() ? " is" : " is not") << " a symmetric tree." << std::endl;
-  std::cout << "Tree " << tree_idx << std::endl;
+  std::cout << (sbt->isSymmetric() ? "is" : "is not") << " a symmetric tree." << std::endl;
+  std::cout << "Binary Tree " << tree_idx << std::endl;
   sbt->displayBinaryTree(node_width_for_display);
-  std::cout << (sbt->isSymmetricIteratively() ? " is" : " is not") << " a symmetric tree(Using iterative method)." << std::endl;
+  std::cout << (sbt->isSymmetricIteratively() ? "is" : "is not") << " a symmetric tree(Using iterative method)." << std::endl;
 
-  std::cout << "Traverse Tree " << tree_idx << " by level: ";
+  std::cout << "Traverse Binary Tree " << tree_idx << " by level: ";
   bt->levelOrder();
   std::cout << std::endl;
-  std::cout << "Traverse Tree " << tree_idx << " by level(Multiple lines):" << std::endl;
+  std::cout << "Traverse Binary Tree " << tree_idx << " by level(Multiple lines):" << std::endl;
   bt->levelOrder2();
   std::cout << std::endl;
-  std::cout << "Traverse Tree " << tree_idx << " by bottom-up level order:" << std::endl;
+  std::cout << "Traverse Binary Tree " << tree_idx << " by bottom-up level order:" << std::endl;
   bt->levelOrederBottomUp();
   std::cout << std::endl;
 
-  std::cout << "Tree " << tree_idx << std::endl;
+  std::cout << "Binary Tree " << tree_idx << std::endl;
   bt->displayBinaryTree(node_width_for_display);
   std::cout << (bt->isBalanced() ? "is " : "is not ") << "balanced." << std::endl;
-  std::cout << "Tree " << tree_idx << std::endl;
+  std::cout << "Binary Tree " << tree_idx << std::endl;
   bt->displayBinaryTree(node_width_for_display);
   std::cout << (bt->isBalanced2() ? "is " : "is not ") << "balanced(Using Method 2)." << std::endl;
 
-  std::cout << "Minimum depth of Tree " << tree_idx << std::endl;
+  std::cout << "Minimum depth of Binary Tree " << tree_idx << std::endl;
   bt->displayBinaryTree(node_width_for_display);
-  std::cout << "is " << bt->minDepth() << std::endl;
+  std::cout << "is " << bt->minDepth() << '.' << std::endl;
 
   BtNode<int> * ibt = buildIntBinaryTree(tree_idx);
   int sum = 0;
-  std::cout << "Integer Tree " << tree_idx << std::endl;
+  std::cout << "Integer Binary Tree " << tree_idx << std::endl;
   ibt->displayBinaryTree(node_width_for_display);
   for (sum=0; sum<=20; ++sum)
     std::cout << "has " << (ibt->hasPathSum(sum) ? "" : "not ") << "a path along which the sum of items is " << sum << "." << std::endl;
+
+  std::cout << "Binary Tree inverted form Binary Tree " << tree_idx << std::endl;
+  bt->displayBinaryTree(node_width_for_display);
+  std::cout << "is:" << std::endl;
+  bt->invert();
+  bt->displayBinaryTree(node_width_for_display);
 
   bt->deleteBinaryTree();
   cbt->deleteBinaryTree();

@@ -24,11 +24,13 @@ class ShadowBtNode {
 template <typename T>
 class BtNode {        // Don't need "<T>".
   public:
-    BtNode(const T & element, BtNode<T> * left=NULL, BtNode<T> * right=NULL)     // Don't need "<T>".
+    BtNode(const T & element, BtNode * left=NULL, BtNode * right=NULL)     // Don't need "<T>".
       : element_(element), left_(left), right_(right) { };
     const T & element() const { return element_; }
-    BtNode * left() { return left_; }      // Don't need "<T>". 
-    BtNode * right() { return right_; }     // Don't need "<T>". 
+    BtNode * left() const { return left_; }      // Don't need "<T>". 
+    BtNode * right() const { return right_; }     // Don't need "<T>". 
+    BtNode * & left() { return left_; }      // Don't need "<T>". 
+    BtNode * & right() { return right_; }     // Don't need "<T>". 
 
     int countLeaf();
     BtNode * copyBinaryTree();
@@ -44,6 +46,7 @@ class BtNode {        // Don't need "<T>".
     bool isBalanced2();
     int minDepth();
     bool hasPathSum(int sum);
+    void invert();
 
   private:
     void countLeaf(BtNode * btn, int & count);
@@ -57,6 +60,7 @@ class BtNode {        // Don't need "<T>".
     bool isBalanced2(BtNode * btn, int & height);
     int minDepth(BtNode * btn);
     bool hasPathSum(BtNode * btn, int sum);
+    BtNode * invert(BtNode * btn);
 
     T element_;
     BtNode * left_;      // Don't need "<T>". 
@@ -465,9 +469,34 @@ bool BtNode<T>::hasPathSum(int sum) {
     return false;
 }
 
+template<typename T>
+BtNode<T> * BtNode<T>::invert(BtNode<T> * btn) {
+  if (btn == NULL)
+    return NULL;
+
+  invert(btn->left());
+  invert(btn->right());
+
+  BtNode<T> * tmp = btn->left();
+  btn->left() = btn->right();
+  btn->right() = tmp;
+  //btn->left() ^= btn->right();
+  //btn->right() ^= btn->left();
+  //btn->left() ^= btn->right();
+
+  return btn;
+}
+
+// LeetCode 226.
+template<typename T>
+void BtNode<T>::invert() {
+  invert(this);
+}
+
 #endif  // __BINARY_TREE_H__
 
 
+// Another buildShadowTree which is not so easy to understand.
 //template <typename T>
 //tnodeShadow *buildShadowTree(tnode<T> *t, int level, int& column)
 //{
