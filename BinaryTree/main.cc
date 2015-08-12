@@ -289,6 +289,25 @@ BtNode<int> * buildIntBinaryTree(int idx) {
 			root = new BtNode<int> (1, b, c);
       break;
 
+    // A binary search tree.
+    case 2:
+			o = new BtNode<int> (-7, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			n = new BtNode<int> (-9, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			m = new BtNode<int> (3, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			l = new BtNode<int> (1, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			k = new BtNode<int> (-1, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			j = new BtNode<int> (-3, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			i = new BtNode<int> (-5, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			h = new BtNode<int> (-8, n, o);
+			g = new BtNode<int> (5, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			f = new BtNode<int> (2, l, m);
+			e = new BtNode<int> (-2, j, k);
+			d = new BtNode<int> (-6, h, i);
+			c = new BtNode<int> (4, f, g);
+			b = new BtNode<int> (-4, d, e);
+			root = new BtNode<int> (0, b, c);
+      break;
+
     // A one-node tree.
     default:
 			//i = new BtNode<int> ('I');
@@ -306,6 +325,23 @@ BtNode<int> * buildIntBinaryTree(int idx) {
 	return root;
 }
 
+template<typename T>
+BtNode<T> * findElement(BtNode<T> * root, T element) {
+  if (root == NULL)
+    return NULL;
+
+  if (root->element() == element)
+    return root;
+  
+  BtNode<T> * l = findElement(root->left(), element);
+  if (l) return l;
+
+  BtNode<T> * r = findElement(root->right(), element);
+  if (r) return r;
+
+  return NULL;
+}
+
 // LeetCode 100.
 template<typename T>
 bool isSameTree(BtNode<T> * p, BtNode<T> * q) {
@@ -319,6 +355,28 @@ bool isSameTree(BtNode<T> * p, BtNode<T> * q) {
       return false;
   else
     return false;
+}
+
+// LeetCode 235.
+template<typename T>
+BtNode<T> * lowestCommonAncestor(BtNode<T> * root, BtNode<T> * p, BtNode<T> * q) { 
+  T rv = root->element();
+  T pv = p->element();
+  T qv = q->element();
+
+  BtNode<T> * ancestor = root;
+
+  if (rv==pv || rv==qv)
+    return root;
+
+  if ((rv>pv && rv<qv) || (rv<qv && rv>qv))
+    return root;
+  else if (rv > pv)
+    ancestor = lowestCommonAncestor(root->left(), p, q);
+  else 
+    ancestor = lowestCommonAncestor(root->right(), p, q);
+
+  return ancestor;
 }
 
 int main(int argc, char * argv[]) {
@@ -389,9 +447,18 @@ int main(int argc, char * argv[]) {
   bt->invert();
   bt->displayBinaryTree(node_width_for_display);
 
+  BtNode<int> * bst = buildIntBinaryTree(2);
+  std::cout << "As to integer Binary Search Tree " << '2' << std::endl;
+  bst->displayBinaryTree(node_width_for_display);
+  BtNode<int> * p = findElement(bst, -7);
+  BtNode<int> * q = findElement(bst, -2);
+  std::cout << "The lowest common ancestor of " << p->element() << " and " << q->element() << " is " 
+            << lowestCommonAncestor(bst, p, q)->element() << '.' << std::endl;
+
   bt->deleteBinaryTree();
   cbt->deleteBinaryTree();
   nbt->deleteBinaryTree();
   sbt->deleteBinaryTree();
+  bst->deleteBinaryTree();
   return 0;
 }
