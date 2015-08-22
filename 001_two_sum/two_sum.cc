@@ -32,6 +32,7 @@ std::vector<int> twoSum(std::vector<int> & nums, int target) {
     }
     um[component] = i;
   }
+  return result;
 }
 
 int main(int argc, char * argv[]) {

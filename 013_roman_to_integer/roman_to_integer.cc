@@ -41,7 +41,7 @@ Input is guaranteed to be within the range from 1 to 3999. */
 //  return sum;
 //}
 
-// Versin 1.
+// Solution 1.
 static std::map<char, int> ri_map ({
   {'I', 1},
   {'V', 5},

@@ -85,8 +85,8 @@ int main() {
   std::cout << x << std::endl;
   std::cout << reverse(x) << std::endl << std::endl;
 
-  // Cannot pass version 0(s: 0011 1110..., s_: 0011 1001...).
-  // Cannot pass version 1(unsigned int is also not big enough).
+  // Cannot pass solution 0(s: 0011 1110..., s_: 0011 1001...).
+  // Cannot pass solution 1(unsigned int is also not big enough).
   x = 1534236469;
   std::cout << x << std::endl;
   std::cout << reverse(x) << std::endl << std::endl;

@@ -47,3 +47,40 @@ int main(int argc, char * argv[]) {
 
   return 0;
 }
+
+  // Get one linked list.
+  std::cout << "Please input the first list(Non-digit charater to stop): ";
+  ListNode * dummy = new ListNode(0);
+  int i;
+  ListNode * node = dummy;
+  while (std::cin >> i) {
+    node->next = new ListNode(i);
+    node = node->next;
+  }
+  ListNode * ll = dummy->next;
+  delete dummy;
+
+
+  // Get two linked lists.
+  std::cout << "Please input the first list(Non-digit charater to stop): ";
+  ListNode * dummy = new ListNode(0);
+  int i;
+  ListNode * node = dummy;
+  while (std::cin >> i) {
+    node->next = new ListNode(i);
+    node = node->next;
+  }
+  ListNode * l1 = dummy->next;
+
+  // Clear the input buffer.
+  setbuf(stdin, NULL);
+  std::cin.clear();
+
+  std::cout << "Please input the second list(Non-digit charater to stop): ";
+  node = dummy;
+  while (std::cin >> i) {
+    node->next = new ListNode(i);
+    node = node->next;
+  }
+  ListNode * l2 = dummy->next;
+  delete dummy;

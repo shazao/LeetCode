@@ -13,7 +13,7 @@ It doesn't matter what you leave beyond the new length. */
 
 #include <stdio.h>
 
-// Solution 0: Non-sorted version(wrong).
+// Solution 0: Non-sorted method(wrong).
 //void swap(int *a, int *b) {
 //  int tmp = *a;
 //  *a = *b;
