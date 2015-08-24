@@ -15,6 +15,7 @@ The solution set must not contain duplicate triplets.
 
 // Star: 7.9.
 // Info.: Adapted directly form LeetCode Discuss, which I can hardly come up with.
+// Info.: There's a faster solution.
 
 #include <iostream>
 #include <vector>
@@ -30,8 +31,7 @@ std::vector<std::vector<int>> threeSum(std::vector<int> & nums) {
 
   sort(nums.begin(), nums.end());
   for (int i=0; i<size-2; ++i)
-    if (i==0 || (i>0 && nums[i]!=nums[i-1])) {    // What's the difference from the line below?
-    //if (nums[i] != nums[i+1]) {
+    if (i==0 || (i>0 && nums[i]!=nums[i-1])) {    // Begin at the first different number in the subsequent numbers.
       int sum = 0-nums[i];
       int l = i+1;
       int r = size-1;
@@ -42,8 +42,9 @@ std::vector<std::vector<int>> threeSum(std::vector<int> & nums) {
           triplet.push_back(nums[l]);
           triplet.push_back(nums[r]);
           triplets.push_back(triplet);
-          while (l<r && nums[l]==nums[l+++1]);    // Note 0: "nums[l++]==nums[l+1]" is wrong!
-          while (l<r && nums[r]==nums[r---1]);
+          while (l<r && nums[l]==nums[l+1]) ++l;  // Don't code in ambiguous style.
+          while (l<r && nums[r]==nums[r-1]) --r;
+          ++ l; -- r;
         } else if (sum > nums[l]+nums[r])
           ++ l;
         else
