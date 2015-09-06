@@ -17,24 +17,59 @@ Although the above answer is in lexicographical order, your answer could be in a
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include "..\Profiler.h"
 
-std::vector<std::string> letterCombinations(std::string digits) {
-  std::vector<std::string> result;
-  if (digits.empty()) return result;
-  const std::vector<std::string> map = { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
-  result.push_back("");
-  for (size_t i=0; i<digits.size(); ++i) {
-    int idx = digits[i]-'0';
-    size_t last_size = result.size();
-    size_t str_len = map[idx].size();
-    size_t next_size = last_size * str_len;
-    result.resize(next_size);
-    for (int j=last_size-1; j>=0; --j)
-      for (int k=0; k<str_len; ++k)
-        result[str_len*(j+1)-1-k] = result[j]+map[idx][k];
-  }
-  return result;
-}
+class Solution {
+  public:
+    virtual std::vector<std::string> letterCombinations(std::string digits);
+};
+
+class Solution0 : public Solution {
+  public:
+    std::vector<std::string> letterCombinations(std::string digits) {
+      std::vector<std::string> result;
+      if (digits.empty()) return result;
+      const std::vector<std::string> map = { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+      result.push_back("");
+      for (size_t i=0; i<digits.size(); ++i) {
+        int idx = digits[i]-'0';
+        size_t last_size = result.size();
+        size_t str_len = map[idx].size();
+        size_t next_size = last_size * str_len;
+        result.resize(next_size);
+        for (int j=last_size-1; j>=0; --j)
+          for (int k=0; k<str_len; ++k)
+            result[str_len*(j+1)-1-k] = result[j]+map[idx][k];
+      }
+      return result;
+    }
+};
+
+class Solution1 : public Solution {
+  public:
+    std::vector<std::string> letterCombinations(std::string digits) {
+      std::vector<std::string> result;
+      if (digits.empty()) return result;
+      const std::vector<std::string> map = { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+      std::string combination;
+      letterCombinations(digits, 0, map, result, combination);
+      return result;
+    }
+
+  private:
+    void letterCombinations(std::string & digits, int idx, const std::vector<std::string> & map, std::vector<std::string> & result, std::string & combination) {
+      if (!digits[idx]) {
+        result.push_back(combination);
+        return ;
+      }
+      std::string str = map[digits[idx]-'0'];
+      for (size_t i=0; i<str.size(); ++i) {
+        combination.push_back(str[i]);
+        letterCombinations(digits, idx+1, map, result, combination);
+        combination.pop_back();
+      }
+    }
+};
 
 int main(int argc, char * argv[]) {
 
@@ -46,10 +81,17 @@ int main(int argc, char * argv[]) {
   std::string s(argv[1]);
   std::cout << "Original string: " << s << std::endl;
 
-  std::cout << "All possible letter combinations that the number could represent are: " << std::endl;
-  std::vector<std::string> sv = letterCombinations(s);
-  for (size_t i=0; i<sv.size(); ++i)
-    std::cout << sv[i] << std::endl;
+  std::vector<Solution*> solutions;
+  Solution0 s0; solutions.push_back(&s0);
+  Solution1 s1; solutions.push_back(&s1);
+  for (size_t si=0; si<solutions.size(); ++si) {
+    std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
+    Profiler perf;
+    std::cout << "All possible letter combinations that the number could represent are: " << std::endl;
+    std::vector<std::string> sv = solutions[si]->letterCombinations(s);
+    for (size_t i=0; i<sv.size(); ++i)
+      std::cout << sv[i] << std::endl;
+  }
 
   return 0;
 }
