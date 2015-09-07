@@ -1,6 +1,6 @@
 class Solution {
   public:
-    virtual 
+    virtual  = 0; // Pure virtual, or Solutionx may not have data members.
 };
 
 class Solution0 : public Solution {

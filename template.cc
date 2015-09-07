@@ -24,7 +24,7 @@ int main(int argc, char * argv[]) {
   std::vector<int> iv;
   for (int i=1; i<argc; ++i)
     iv.push_back(std::atoi(argv[i]));
-  std::cout << "Original vector: ";
+  std::cout << "\nOriginal vector: ";
   for (size_t i=0; i<iv.size(); ++i)
     std::cout << iv[i] << " ";
   std::cout << std::endl;

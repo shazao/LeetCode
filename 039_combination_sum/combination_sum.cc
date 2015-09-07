@@ -73,6 +73,9 @@ class Solution0 : public Solution {
 };
 
 // Solution 1: From LeetCode Discuss, smarter one.
+/* Backtracking is for such a thing: It has m steps, n(0), n(1), ..., n(m-1) possible methods for each step;
+ * n(0)*n(1)*...*n(m-1) combinations for accomplish this thing using brute force, backtracking is to stop 
+ * searching in advance after you got the impossible earlier. */
 class Solution1 : public Solution {
   public:
     std::vector<std::vector<int> > combinationSum(std::vector<int> & candidates, int target) {
@@ -90,6 +93,7 @@ class Solution1 : public Solution {
         return;
       }
 
+      // Search from another dimension.
       for (size_t i=idx; i<candidates.size()&&target>=candidates[i]; ++i) {
         combination.push_back(candidates[i]);
         combinationSum(combinations, combination, candidates, target-candidates[i], i);
@@ -98,6 +102,42 @@ class Solution1 : public Solution {
     }
 };
 
+// Solution 2: My solution, do not calculate sum.
+class Solution2 : public Solution {
+  public:
+    std::vector<std::vector<int> > combinationSum(std::vector<int> & candidates, int target) {
+      std::vector<std::vector<int> > combinations;
+      sort(candidates.begin(), candidates.end());
+      std::vector<int> x(candidates.size(), 0);
+
+      findCombination(candidates, target, x, 0, combinations);
+
+      return combinations;
+    }
+
+  private:
+    void findCombination(std::vector<int> & candidates, int target, std::vector<int> & x, int idx, std::vector<std::vector<int> > & combinations) {
+      if (idx == candidates.size())
+        return;
+
+      for (int i=0; i<=target/candidates[idx]; ++i) {
+        x[idx] = i;
+        target -= i*candidates[idx];
+        if (target == 0) {
+          std::vector<int> combination;
+          for (int j=0; j<=idx; ++j)
+            for (int k=0; k<x[j]; ++k)
+              combination.push_back(candidates[j]);
+          combinations.push_back(combination);
+          return;
+        } else if (target > 0) {
+          findCombination(candidates, target, x, idx+1, combinations);
+          target += i*candidates[idx];
+        } else
+          return;
+      }
+    }
+};
 
 int main(int argc, char * argv[]) {
 
@@ -122,8 +162,9 @@ int main(int argc, char * argv[]) {
   std::vector<Solution*> solutions;
   Solution0 s0; solutions.push_back(&s0);
   Solution1 s1; solutions.push_back(&s1);
+  Solution2 s2; solutions.push_back(&s2);
   for (size_t si=0; si<solutions.size(); ++si) {
-    std::cout << "\t\t=== Solution " << si << " ===" << std::endl;
+    std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
     Profiler perf;
     std::vector<std::vector<int> > combinations = solutions[si]->combinationSum(iv, target);
     std::cout << "The solution sets are: " << std::endl;
