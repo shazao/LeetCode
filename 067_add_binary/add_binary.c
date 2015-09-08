@@ -20,7 +20,7 @@ char * addBinary(char * a, char * b) {
 
   int la = strlen(a);
   int lb = strlen(b);
-  int lmax = la>=lb ? la : lb;
+  int lmax = la>=lb ? la : lb;  // Foolish to calculate lmax and lmin.
   int lmin = la<=lb ? la : lb;
 
   // Process the common lower part shared by a and b.
@@ -93,7 +93,7 @@ public:
         string s = "";
 
         int c = 0, i = a.size() - 1, j = b.size() - 1;
-        while(i >= 0 || j >= 0 || c == 1)
+        while(i >= 0 || j >= 0 || c == 1)     // Just like Problem 002_add_two_numbers, without calculating the lengths.
         {
             c += i >= 0 ? a[i --] - '0' : 0;
             c += j >= 0 ? b[j --] - '0' : 0;
