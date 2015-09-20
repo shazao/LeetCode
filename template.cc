@@ -49,6 +49,7 @@ int main(int argc, char * argv[]) {
   for (size_t si=0; si<solutions.size(); ++si) {
     std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
     Profiler perf;
+    solutions[si]->;
   }
 
   return 0;
