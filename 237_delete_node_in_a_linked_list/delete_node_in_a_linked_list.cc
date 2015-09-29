@@ -32,20 +32,33 @@ void printList(ListNode * head) {
   std::cout << node->val << std::endl;
 }
 
+// Solution 0: A straightforward method.
+//void deleteNode(ListNode * node) {
+//  if (node == NULL)
+//    return;
+//
+//  ListNode * ln = node;
+//  while (ln->next->next != NULL) {    // "Except the tail" implies the list has two nodes at least.
+//    ln->val = ln->next->val;
+//    ln = ln->next;
+//  }
+//
+//  ListNode * tail = ln->next;
+//  ln->val = tail->val;
+//  ln->next = NULL;
+//  delete tail;
+//
+//  return;
+//}
+
+// Solution 1: A direct method.
 void deleteNode(ListNode * node) {
   if (node == NULL)
     return;
 
-  ListNode * ln = node;
-  while (ln->next->next != NULL) {    // "Except the tail" implies the list has two nodes at least.
-    ln->val = ln->next->val;
-    ln = ln->next;
-  }
-
-  ListNode * tail = ln->next;
-  ln->val = tail->val;
-  ln->next = NULL;
-  delete tail;
+  ListNode * tmp = node->next;
+  *node = *tmp;
+  delete tmp;
 
   return;
 }
