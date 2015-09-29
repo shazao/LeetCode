@@ -43,12 +43,9 @@ class Solution0 : public Solution {
     }
 };
 
-// Store the subarray is a little more complex.
+// TODO Store the subarray is a little more complex.
 class Solution1 : public Solution {
   public:
-      //for (size_t i=0; i<sub_array.size(); ++i)
-      //  std::cout << ' ' << sub_array[i];
-      //std::cout << std::endl;
 };
 
 
@@ -96,7 +93,11 @@ public:
         return res;
     }
 };
-The idea is to find the largest difference between the sums when you summing up the array from left to right. The largest difference corresponds to the sub-array with largest sum. I worked it out independently although It is very close to lucastan's solution https://oj.leetcode.com/discuss/11288/simple-o-n-c-solution-no-dp-no-divide-and-conquer
+The idea is to find the largest difference between the sums when you summing up the array from left to right. 
+
+The largest difference corresponds to the sub-array with largest sum. I worked it out independently although 
+
+It is very close to lucastan's solution https://oj.leetcode.com/discuss/11288/simple-o-n-c-solution-no-dp-no-divide-and-conquer
 
 divide and conquer:
 
@@ -122,7 +123,9 @@ public:
         return v.m;
     }
 };
-the idea is: for each sub array we calculate 4 values in O(1) time based on the return values of its two halves. The meaning of the values:
+the idea is: for each sub array we calculate 4 values in O(1) time based on the return values of its two halves. 
+
+The meaning of the values:
 
 l: the sum of the sub array with largest sum starting from the first element
 m: the sum of the sub array with largest sum
