@@ -91,7 +91,6 @@ int main(int argc, char * argv[]) {
   }
   std::cout << std::endl;
 
-
   std::vector<Solution*> solutions;
   Solution0 s0; solutions.push_back(&s0);
   //Solution1 s1; solutions.push_back(&s1);
