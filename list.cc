@@ -49,7 +49,7 @@ int main(int argc, char * argv[]) {
 }
 
   // Get one linked list.
-  std::cout << "Please input the first list(Non-digit charater to stop): ";
+  std::cout << "Please input the list(Non-digit charater to stop): ";
   ListNode * dummy = new ListNode(0);
   int i;
   ListNode * node = dummy;
@@ -84,3 +84,14 @@ int main(int argc, char * argv[]) {
   }
   ListNode * l2 = dummy->next;
   delete dummy;
+
+  // Get an array.
+  std::cout << "Please input the array: ";
+  std::vector<int> iv;
+  int i = 0;
+  while (std::cin >> i)
+    iv.push_back(i);
+  std::cout << "The array you input is: ";
+  for (auto itr=iv.begin(); itr!=iv.end(); ++itr)
+    std::cout << ' ' << *itr;
+  std::cout << std::endl;
