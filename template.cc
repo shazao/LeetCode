@@ -28,19 +28,20 @@ class Solution1 : public Solution {
 
 int main(int argc, char * argv[]) {
 
-  if (argc != 2) {
+  if (argc != 1) {
     std::cout << "Please specify the correct arguments." << std::endl;
     return -1;
   }
 
-  int n = atoi(argv[1]);
-
+  // Get an array.
+  std::cout << "Please input the array: ";
   std::vector<int> iv;
-  for (int i=1; i<argc; ++i)
-    iv.push_back(std::atoi(argv[i]));
-  std::cout << "\nOriginal vector: ";
-  for (size_t i=0; i<iv.size(); ++i)
-    std::cout << iv[i] << " ";
+  int i = 0;
+  while (std::cin >> i)
+    iv.push_back(i);
+  std::cout << "The array you input is: ";
+  for (auto itr=iv.begin(); itr!=iv.end(); ++itr)
+    std::cout << ' ' << *itr;
   std::cout << std::endl;
 
   std::vector<Solution*> solutions;
