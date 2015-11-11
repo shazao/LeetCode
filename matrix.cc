@@ -3,6 +3,7 @@
 #include <sstream>
 
 void getMatrix0() {
+  // Get a matrix; Ctrl+Z or Ctrl+D to stop.
   std::vector<std::vector<int> > matrix;
   std::cout << "Please input a matrix: " << std::endl;
   int i = 0;
@@ -16,6 +17,8 @@ void getMatrix0() {
     if (row.empty())
       break;
     if (matrix.size()!=0 && row.size()!=matrix[matrix.size()-1].size()) {
+      //std::cout << row.size() << ' ' << matrix[matrix.size()-1].size() << ' ' << matrix.size() << std::endl;
+      //std::cout << row[0] << std::endl;
       std::cout << "Distorted matrix!" << std::endl;
       return ;
     } else
@@ -61,5 +64,8 @@ int main() {
     std::cout << std::endl;
   }
   std::cout << std::endl;
+
+  std::cin.clear();
+  std::cin.sync();
 }
 */
