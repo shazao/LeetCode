@@ -16,15 +16,12 @@ struct ListNode {
 };
 
 void printList(ListNode * head) {
-  if (head == NULL)
-    return;
-
   ListNode * node = head;
-  while (node->next) {
-    std::cout << node->val << " ";
+  while (node) {
+    std::cout << node->val << ' ';
     node = node->next;
   }
-  std::cout << node->val << std::endl;
+  std::cout << std::endl;
 }
 
 int main(int argc, char * argv[]) {
