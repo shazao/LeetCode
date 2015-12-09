@@ -30,10 +30,8 @@ class Solution0 : public Solution {
       int largest_sum = nums[0];
       for (size_t i=1; i<nums.size(); ++i) {
         int sum_ = sum + nums[i];
-        if (sum_ > nums[i])
-          sum = sum_;
-        else
-          sum = nums[i];
+        if (sum_ > nums[i]) sum = sum_;
+        else                sum = nums[i];
 
         if (largest_sum < sum)
           largest_sum = sum;
@@ -43,8 +41,21 @@ class Solution0 : public Solution {
     }
 };
 
-// TODO Store the subarray is a little more complex.
+// Similar to Solution0 but modified original nums vector; But runs slower.
 class Solution1 : public Solution {
+  public:
+    int maxSubArray(std::vector<int> & nums) {
+      int largest_sum = nums[0];
+      for (size_t i=1; i<nums.size(); ++i) {
+        if (nums[i-1] > 0) nums[i] += nums[i-1];
+        if (nums[i] > largest_sum) largest_sum = nums[i];
+      }
+      return largest_sum;
+    }
+};
+
+// TODO Store the subarray is a little more complex.
+class Solution2 : public Solution {
   public:
 };
 
@@ -64,7 +75,7 @@ int main(int argc, char * argv[]) {
 
   std::vector<Solution*> solutions;
   Solution0 s0; solutions.push_back(&s0);
-  //Solution1 s1; solutions.push_back(&s1);
+  Solution1 s1; solutions.push_back(&s1);
   for (size_t si=0; si<solutions.size(); ++si) {
     std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
     Profiler perf;
