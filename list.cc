@@ -46,7 +46,7 @@ int main(int argc, char * argv[]) {
 }
 
   // Get one linked list.
-  std::cout << "Please input the list(Non-digit charater to stop): ";
+  std::cout << "Please input the list(Ctrl+d<CR> to stop): ";
   ListNode * dummy = new ListNode(0);
   int i;
   ListNode * node = dummy;
@@ -54,12 +54,15 @@ int main(int argc, char * argv[]) {
     node->next = new ListNode(i);
     node = node->next;
   }
-  ListNode * ll = dummy->next;
+  ListNode * l = dummy->next;
   delete dummy;
+  std::cout << "The linked list you input: ";
+  printList(l);
+  std::cout << std::endl;
 
 
   // Get two linked lists.
-  std::cout << "Please input the first list(Non-digit charater to stop): ";
+  std::cout << "Please input the first list(Ctrl+d<CR> to stop): ";
   ListNode * dummy = new ListNode(0);
   int i;
   ListNode * node = dummy;
