@@ -47,6 +47,9 @@ class BtNode {        // Don't need "<T>".
     int minDepth();
     bool hasPathSum(int sum);
     void invert();
+    void inOrder();
+    void inorderIteratively();
+    void inorderIteratively2();
 
   private:
     void countLeaf(BtNode * btn, int & count);
@@ -61,6 +64,9 @@ class BtNode {        // Don't need "<T>".
     int minDepth(BtNode * btn);
     bool hasPathSum(BtNode * btn, int sum);
     BtNode * invert(BtNode * btn);
+    void inOrder(BtNode * btn);
+    void inorderIteratively(BtNode * btn);
+    void inorderIteratively2(BtNode * btn);
 
     T element_;
     BtNode * left_;      // Don't need "<T>". 
@@ -491,6 +497,62 @@ BtNode<T> * BtNode<T>::invert(BtNode<T> * btn) {
 template<typename T>
 void BtNode<T>::invert() {
   invert(this);
+}
+
+template<typename T>
+void BtNode<T>::inOrder() {
+  inOrder(this);
+}
+
+template<typename T>
+void BtNode<T>::inOrder(BtNode<T> * btn) {
+  if (!btn) return;
+  inOrder(btn->left());
+  std::cout << ' ' << btn->element();
+  inOrder(btn->right());
+}
+
+template<typename T>
+void BtNode<T>::inorderIteratively(BtNode<T> * btn) {
+  if (!btn) return;
+  BtNode<T> * node = btn;
+  std::stack<BtNode<T>*> stk;
+  while (!stk.empty() || btn) {
+    if (btn) {
+      stk.push(btn);
+      btn = btn->left();
+    } else {
+      std::cout << ' ' << stk.top()->element();
+      btn = stk.top()->right();
+      stk.pop();
+    }
+  }
+  std::cout << std::endl;
+}
+
+// LeetCode 094.
+template<typename T>
+void BtNode<T>::inorderIteratively() {
+  inorderIteratively(this);
+}
+
+template<typename T>
+void BtNode<T>::inorderIteratively2(BtNode<T> * btn) {
+  if (!btn) return;
+  std::stack<BtNode<T>*> stk;
+  while (1) {
+    while (btn) { stk.push(btn); btn = btn->left(); }
+    if (stk.empty()) break;
+    std::cout << ' ' << stk.top()->element();
+    btn = stk.top()->right();
+    stk.pop();
+  }
+  std::cout << std::endl;
+}
+
+template<typename T>
+void BtNode<T>::inorderIteratively2() {
+  inorderIteratively2(this);
 }
 
 #endif  // __BINARY_TREE_H__

@@ -21,19 +21,87 @@ Note: Recursive solution is trivial, could you do it iteratively?
 #include <cstdlib>
 #include "..\Profiler.h"
 
+struct TreeNode {
+   int val;
+   TreeNode *left;
+   TreeNode *right;
+   TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
 class Solution {
   public:
     virtual std::vector<int> inorderTraversal(TreeNode * root) = 0; // Pure virtual, or Solutionx may not have data members.
 };
 
+// My solution, not so neat.
 class Solution0 : public Solution {
-  public:
-    
+public:
+  std::vector<int> inorderTraversal(TreeNode * root) {
+    std::vector<int> rst;
+    if (!root) return rst;
+    TreeNode * node = root;
+    std::stack<TreeNode*> stk;
+    while (!stk.empty() || node) {
+      while (node) {
+        stk.push(node);
+        node = node->left;
+      }
+      node = stk.top();
+      stk.pop();
+      rst.push_back(node->val);
+      if (TreeNode * right = node->right) {
+        node = right;
+      } else {
+        if (!stk.empty()) {
+          TreeNode * parent = stk.top();
+          stk.pop();
+          rst.push_back(parent->val);
+          node = parent->right;
+        } else node = NULL;
+      }
+    }
+    return rst;
+  }
 };
 
 class Solution1 : public Solution {
-  public:
-    
+public:
+  std::vector<int> inorderTraversal(TreeNode * root) {
+    std::vector<int> rst;
+    if (!root) return rst;
+    TreeNode * node = root;
+    std::stack<TreeNode*> stk;
+    while (!stk.empty() || node) {
+      if (node) {
+        stk.push(node);
+        node = node->left;
+      } else {
+        rst.push_back(stk.top()->val);
+        node = stk.top()->right;
+        stk.pop();
+      }
+    }
+    return rst;
+  }
+};
+
+class Solution2 : public Solution {
+ std::vector<int> inorderTraversal(TreeNode * root) {
+    std::vector<int> rst;
+    if (!root) return rst;
+    std::stack<TreeNode*> stk;
+    while (1) {
+      while (root) {
+        stk.push(root);
+        root = root->left;
+      }
+      if (stk.empty()) break;
+      rst.push_back(stk.top()->val);
+      root = stk.top()->right;
+      stk.pop();
+    }
+    return rst;
+  }   
 };
 
 

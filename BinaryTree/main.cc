@@ -455,6 +455,20 @@ int main(int argc, char * argv[]) {
   std::cout << "The lowest common ancestor of " << p->element() << " and " << q->element() << " is " 
             << lowestCommonAncestor(bst, p, q)->element() << '.' << std::endl;
 
+  // Test in-order iterative traversal.
+  std::cout << std::endl;
+  for (int i=0; i<16; ++i) {
+    BtNode<char> * cbt = buildBinaryTree(i);
+    std::cout << "The in-order recursive traversal of a tree: ";
+    cbt->inOrder();
+    std::cout << std::endl;
+    std::cout << "The in-order iterative traversal of the tree: ";
+    cbt->inorderIteratively();
+    std::cout << "The in-order iterative traversal(2) of the tree: ";
+    cbt->inorderIteratively2();
+    std::cout << std::endl;
+  }
+
   bt->deleteBinaryTree();
   cbt->deleteBinaryTree();
   nbt->deleteBinaryTree();
