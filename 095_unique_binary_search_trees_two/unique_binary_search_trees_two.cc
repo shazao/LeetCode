@@ -41,6 +41,13 @@ struct TreeNode {
    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+void inOrder(TreeNode * tn) {
+  if (!tn) return;
+  inOrder(tn->left);
+  std::cout << ' ' << tn->val;
+  inOrder(tn->right);
+}
+
 class Solution {
   public:
     virtual std::vector<TreeNode*> generateTrees(int n) = 0; // Pure virtual, or Solutionx may not have data members.
@@ -49,6 +56,30 @@ class Solution {
 class Solution0 : public Solution {
   public:
     std::vector<TreeNode*> generateTrees(int n) {
+      std::vector<std::vector<TreeNode*> > trees;
+      trees.push_back(std::vector<TreeNode*>(1, NULL));
+      for (int i=1; i<=n; ++i) {    // Dynamic programming.
+        std::vector<TreeNode*> next_trees;
+        for (int j=1; j<=i; ++j) {  // Everyone can be the root.
+          for (int k=0; k<trees[j-1].size(); ++k)
+            for (int l=0; l<trees[i-j].size(); ++l) {
+              TreeNode * root = new TreeNode(j);
+              root->left = copyTree(trees[j-1][k]);
+              root->right = copyTree(trees[i-j][l], j);
+              next_trees.push_back(root);
+            }
+        }
+        trees.push_back(next_trees);
+      }
+      return trees.back();
+    }
+  private:
+    TreeNode * copyTree(TreeNode * root, int offset = 0) {
+      if (!root) return root;
+      TreeNode * new_root = new TreeNode(root->val + offset);
+      new_root->left = copyTree(root->left);
+      new_root->right = copyTree(root->right);
+      return new_root;
     }
 };
 
@@ -65,24 +96,23 @@ int main(int argc, char * argv[]) {
     return -1;
   }
 
-  // Get an array.
-  std::cout << "Please input the array: ";
-  std::vector<int> iv;
-  int i = 0;
-  while (std::cin >> i)
-    iv.push_back(i);
-  std::cout << "The array you input is: ";
-  for (auto itr=iv.begin(); itr!=iv.end(); ++itr)
-    std::cout << ' ' << *itr;
-  std::cout << std::endl;
+  std::cout << "Please input the n: ";
+  int n = 0;
+  std::cin >> n;
 
   std::vector<Solution*> solutions;
   Solution0 s0; solutions.push_back(&s0);
-  Solution1 s1; solutions.push_back(&s1);
+  //Solution1 s1; solutions.push_back(&s1);
   for (size_t si=0; si<solutions.size(); ++si) {
     std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
     Profiler perf;
-    solutions[si]->;
+    std::vector<TreeNode*> all_trees = solutions[si]->generateTrees(n);
+    std::cout << "The in-order traversal of all the trees are: " << std::endl;
+    for (size_t i=0; i<all_trees.size(); ++i) {
+      inOrder(all_trees[i]);
+      std::cout << std::endl;
+    }
+    std::cout << "Total " << all_trees.size() << std::endl;
   }
 
   return 0;

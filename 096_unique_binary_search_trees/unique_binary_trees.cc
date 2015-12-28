@@ -1,7 +1,17 @@
 /*
+Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
+
+For example,
+Given n = 3, there are a total of 5 unique BST's.
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
 */
 
-// Star: 
+// Star: 8.8.
 
 #include <iostream>
 #include <vector>
@@ -24,6 +34,16 @@ class Solution {
 class Solution0 : public Solution {
   public:
     int numTrees(int n) {
+      std::vector<int> rst;
+      rst.push_back(1);   // n == 0;
+      rst.push_back(1);   // n == 1;
+      for (int i=2; i<=n; ++i) {  // Dynamically programming from 2 to n.
+        int n_i = 0;
+        for (int j=0; j<i; ++j)   // root value == 1, 2, 3, ..., n.
+          n_i += rst[j] * rst[i-1-j];
+        rst.push_back(n_i);
+      }
+      return rst.back();
     }
 };
 
@@ -40,24 +60,19 @@ int main(int argc, char * argv[]) {
     return -1;
   }
 
-  // Get an array.
-  std::cout << "Please input the array: ";
-  std::vector<int> iv;
-  int i = 0;
-  while (std::cin >> i)
-    iv.push_back(i);
-  std::cout << "The array you input is: ";
-  for (auto itr=iv.begin(); itr!=iv.end(); ++itr)
-    std::cout << ' ' << *itr;
-  std::cout << std::endl;
+  std::cout << "Please input the n: ";
+  int n = 0;
+  std::cin >> n;
 
   std::vector<Solution*> solutions;
   Solution0 s0; solutions.push_back(&s0);
-  Solution1 s1; solutions.push_back(&s1);
+  //Solution1 s1; solutions.push_back(&s1);
   for (size_t si=0; si<solutions.size(); ++si) {
     std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
     Profiler perf;
-    solutions[si]->;
+    int n_trees = solutions[si]->numTrees(n);
+    std::cout << "There're total " << n_trees << " structurally unique BST's (binary search trees) that store values 1..." 
+      << n << " ." << std::endl << std::endl;
   }
 
   return 0;
