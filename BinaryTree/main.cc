@@ -461,11 +461,12 @@ int main(int argc, char * argv[]) {
     BtNode<char> * cbt = buildBinaryTree(i);
     std::cout << "The in-order recursive traversal of a tree: ";
     cbt->inOrder();
-    std::cout << std::endl;
     std::cout << "The in-order iterative traversal of the tree: ";
     cbt->inorderIteratively();
     std::cout << "The in-order iterative traversal(2) of the tree: ";
     cbt->inorderIteratively2();
+    std::cout << "The in-order iterative traversal(3) of the tree: ";
+    cbt->inorderIteratively3();
     std::cout << std::endl;
   }
 

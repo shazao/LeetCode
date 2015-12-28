@@ -13,7 +13,7 @@ return [1,3,2].
 Note: Recursive solution is trivial, could you do it iteratively?
 */
 
-// Star: 
+// Star: 9.1.
 
 #include <iostream>
 #include <vector>
@@ -23,8 +23,8 @@ Note: Recursive solution is trivial, could you do it iteratively?
 
 struct TreeNode {
    int val;
-   TreeNode *left;
-   TreeNode *right;
+   TreeNode * left;
+   TreeNode * right;
    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
@@ -64,6 +64,7 @@ public:
   }
 };
 
+// Using stack, Method 1.
 class Solution1 : public Solution {
 public:
   std::vector<int> inorderTraversal(TreeNode * root) {
@@ -85,6 +86,7 @@ public:
   }
 };
 
+// Using stack, Method 2.
 class Solution2 : public Solution {
  std::vector<int> inorderTraversal(TreeNode * root) {
     std::vector<int> rst;
@@ -104,6 +106,33 @@ class Solution2 : public Solution {
   }   
 };
 
+// Morris traversal.
+class Solution3 : public Solution {
+public:
+  std::vector<int> inorderTraversal(TreeNode* root) {
+    std::vector<int> rst;
+    TreeNode * cn = root;   // Current node.
+    while (cn) {
+      if (cn->left == NULL) {
+        rst.push_back(cn->val);
+        cn = cn->right;
+      } else {
+        TreeNode * node = cn->left;
+        while (node->right!=NULL && node->right!=cn)
+          node = node->right;
+        if (node->right == NULL) {
+          node->right = cn;
+          cn = cn->left;
+        } else {
+          rst.push_back(cn->val);
+          cn = cn->right;
+          node->right = NULL;
+        }
+      }
+    }
+    return rst;
+  }
+};
 
 int main(int argc, char * argv[]) {
 

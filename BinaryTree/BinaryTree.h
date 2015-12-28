@@ -50,6 +50,7 @@ class BtNode {        // Don't need "<T>".
     void inOrder();
     void inorderIteratively();
     void inorderIteratively2();
+    void inorderIteratively3();
 
   private:
     void countLeaf(BtNode * btn, int & count);
@@ -67,6 +68,7 @@ class BtNode {        // Don't need "<T>".
     void inOrder(BtNode * btn);
     void inorderIteratively(BtNode * btn);
     void inorderIteratively2(BtNode * btn);
+    void inorderIteratively3(BtNode * btn);
 
     T element_;
     BtNode * left_;      // Don't need "<T>". 
@@ -502,6 +504,7 @@ void BtNode<T>::invert() {
 template<typename T>
 void BtNode<T>::inOrder() {
   inOrder(this);
+  std::cout << std::endl;
 }
 
 template<typename T>
@@ -553,6 +556,34 @@ void BtNode<T>::inorderIteratively2(BtNode<T> * btn) {
 template<typename T>
 void BtNode<T>::inorderIteratively2() {
   inorderIteratively2(this);
+}
+
+template<typename T>
+void BtNode<T>::inorderIteratively3(BtNode<T> * btn) {
+  while (btn) {
+    if (btn->left() == NULL) {
+      std::cout << ' ' << btn->element();
+      btn = btn->right();
+    } else {
+      BtNode<T> * node = btn->left();
+      while (node->right()!=NULL && node->right()!=btn)
+        node = node->right();
+      if (node->right() == NULL) {
+        node->right() = btn;
+        btn = btn->left();
+      } else {
+        std::cout << ' ' << btn->element();
+        btn = btn->right();
+        node->right() == NULL;
+      }
+    }
+  }
+  std::cout << std::endl;
+};
+
+template<typename T>
+void BtNode<T>::inorderIteratively3() {
+  inorderIteratively3(this);
 }
 
 #endif  // __BINARY_TREE_H__
