@@ -4,6 +4,7 @@
 #include <queue>
 #include <stack>
 #include <cmath>
+#include <climits>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -51,6 +52,7 @@ class BtNode {        // Don't need "<T>".
     void inorderIteratively();
     void inorderIteratively2();
     void inorderIteratively3();
+    bool isBst();
 
   private:
     void countLeaf(BtNode * btn, int & count);
@@ -69,6 +71,7 @@ class BtNode {        // Don't need "<T>".
     void inorderIteratively(BtNode * btn);
     void inorderIteratively2(BtNode * btn);
     void inorderIteratively3(BtNode * btn);
+    bool isBst(BtNode<T> * btn, int * min, int * max);
 
     T element_;
     BtNode * left_;      // Don't need "<T>". 
@@ -584,6 +587,39 @@ void BtNode<T>::inorderIteratively3(BtNode<T> * btn) {
 template<typename T>
 void BtNode<T>::inorderIteratively3() {
   inorderIteratively3(this);
+}
+
+// LeetCode 098.
+template<typename T>
+bool BtNode<T>::isBst() {
+  int min = INT_MAX;
+  int max = INT_MIN;
+  return isBst(this, &min, &max);
+}
+
+template<typename T>
+bool BtNode<T>::isBst(BtNode<T> * btn, int * min, int * max) {
+  if (!btn) return true;
+
+  int l_min = INT_MAX;
+  int l_max = INT_MIN;
+  int r_min = INT_MAX;
+  int r_max = INT_MIN;
+
+  if (isBst(btn->left(), &l_min, &l_max) == false)
+    return false;
+  if (isBst(btn->right(), &r_min, &r_max) == false)
+    return false;
+  
+  int cv = btn->element();   // Current value.
+  *min = l_min<r_min ? l_min : r_min;
+  *min = *min<cv ? *min : cv;
+  *max = l_max>r_max ? l_max : r_max;
+  *max = *max>cv ? *max : cv;
+
+  if (cv <= l_max || cv >= r_min) 
+    return false;
+  return true;  // Note: Two important things in recursion: 1, Return value in all branches; 2, ?(Forget now).
 }
 
 #endif  // __BINARY_TREE_H__

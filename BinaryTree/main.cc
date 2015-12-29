@@ -247,7 +247,6 @@ BtNode<int> * buildIntBinaryTree(int idx) {
 	BtNode<int> *root, *b, *c, *d, *e, *f, *g, *h, *i,
                *j, *k, *l, *m, *n, *o;
 
-	// parameter n specifies a tree in the range 0 - 2
 	switch(idx)
 	{
     // A not-so-balanced binary tree.
@@ -306,6 +305,16 @@ BtNode<int> * buildIntBinaryTree(int idx) {
 			c = new BtNode<int> (4, f, g);
 			b = new BtNode<int> (-4, d, e);
 			root = new BtNode<int> (0, b, c);
+      break;
+
+    // Another binary search tree.
+    case 3:
+			f = new BtNode<int> (4, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			e = new BtNode<int> (3, (BtNode<int> *)NULL, f);
+			d = new BtNode<int> (1, (BtNode<int> *)NULL, (BtNode<int> *)NULL);
+			c = new BtNode<int> (2, d, e);
+			b = new BtNode<int> (5, c, (BtNode<int> *)NULL);
+			root = new BtNode<int> (6, b, (BtNode<int> *)NULL);
       break;
 
     // A one-node tree.
@@ -447,13 +456,13 @@ int main(int argc, char * argv[]) {
   bt->invert();
   bt->displayBinaryTree(node_width_for_display);
 
-  BtNode<int> * bst = buildIntBinaryTree(2);
+  BtNode<int> * ibst = buildIntBinaryTree(2);
   std::cout << "As to integer Binary Search Tree " << '2' << std::endl;
-  bst->displayBinaryTree(node_width_for_display);
-  BtNode<int> * p = findElement(bst, -7);
-  BtNode<int> * q = findElement(bst, -2);
+  ibst->displayBinaryTree(node_width_for_display);
+  BtNode<int> * p = findElement(ibst, -7);
+  BtNode<int> * q = findElement(ibst, -2);
   std::cout << "The lowest common ancestor of " << p->element() << " and " << q->element() << " is " 
-            << lowestCommonAncestor(bst, p, q)->element() << '.' << std::endl;
+            << lowestCommonAncestor(ibst, p, q)->element() << '.' << std::endl;
 
   // Test in-order iterative traversal.
   std::cout << std::endl;
@@ -470,10 +479,20 @@ int main(int argc, char * argv[]) {
     std::cout << std::endl;
   }
 
+  // Test a tree is a BST or not.
+  std::cout << "Binary Tree: " << std::endl;
+  ibst->displayBinaryTree(node_width_for_display);
+  std::cout << std::endl << (ibst->isBst() ? "is " : "is not ") << "binary search tree." << std::endl;
+  BtNode<int> * ibst2 = buildIntBinaryTree(3);
+  std::cout << "Binary Tree: " << std::endl;
+  ibst2->displayBinaryTree(node_width_for_display);
+  std::cout << std::endl << (ibst2->isBst() ? "is " : "is not ") << "binary search tree." << std::endl;
+
   bt->deleteBinaryTree();
   cbt->deleteBinaryTree();
   nbt->deleteBinaryTree();
   sbt->deleteBinaryTree();
-  bst->deleteBinaryTree();
+  ibst->deleteBinaryTree();
+  ibst2->deleteBinaryTree();
   return 0;
 }

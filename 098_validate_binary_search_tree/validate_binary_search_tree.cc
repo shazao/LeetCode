@@ -8,12 +8,14 @@ The right subtree of a node contains only nodes with keys greater than the node'
 Both the left and right subtrees must also be binary search trees.
 */
 
-// Star: 
+// Star: 9.0.
+// Info.: Refer to LeetCode 110.
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <climits>
 #include "..\Profiler.h"
 
 struct TreeNode {
@@ -26,16 +28,40 @@ struct TreeNode {
 class Solution {
   public:
     virtual bool isValidBST(TreeNode * root) = 0; // Pure virtual, or Solutionx may not have data members.
+    virtual bool isValidBST(TreeNode * tn, long * min, long * max) = 0;
 };
 
+// My solution inpired by LeetCode 110.
 class Solution0 : public Solution {
   public:
     bool isValidBST(TreeNode * root) {
       if (!root) return true;
-      if ((root->left && root->left->val>=root->val) ||
-          (root->right && root->right->val<=root->val))
+      long min = LONG_MAX, max = LONG_MIN;
+      return isValidBST(root, &min, &max);
+    }
+
+  private:
+    bool isValidBST(TreeNode * tn, long * min, long * max) {
+      if (!tn) return true;
+
+      long l_min = LONG_MAX;
+      long l_max = LONG_MIN;
+      long r_min = LONG_MAX;
+      long r_max = LONG_MIN;
+
+      if (isValidBST(tn->left, &l_min, &l_max) == false)
         return false;
-      return isValidBST(root->left) && isValidBST(root->right);
+      if (isValidBST(tn->right, &r_min, &r_max) == false)
+        return false;
+      
+      int cv = tn->val;   // Current value.
+      *min = l_min<r_min ? l_min : r_min;
+      *min = *min<cv ? *min : cv;
+      *max = l_max>r_max ? l_max : r_max;
+      *max = *max>cv ? *max : cv;
+
+      if (cv <= l_max || cv >= r_min) return false;
+      return true;
     }
 };
 
