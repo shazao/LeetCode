@@ -26,7 +26,7 @@ Here's an example:
 The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}".
 */
 
-// Star: 
+// Star: 9.0.
 
 #include <iostream>
 #include <vector>
@@ -53,15 +53,18 @@ class Solution {
     virtual std::vector<TreeNode*> generateTrees(int n) = 0; // Pure virtual, or Solutionx may not have data members.
 };
 
+// My solution based on LeetCode 096: Took me a lot of time, beats 89.23%.
+// But when deleteTree added, it gets slower.
 class Solution0 : public Solution {
   public:
     std::vector<TreeNode*> generateTrees(int n) {
+      if (!n) return std::vector<TreeNode*>();
       std::vector<std::vector<TreeNode*> > trees;
       trees.push_back(std::vector<TreeNode*>(1, NULL));
       for (int i=1; i<=n; ++i) {    // Dynamic programming.
         std::vector<TreeNode*> next_trees;
         for (int j=1; j<=i; ++j) {  // Everyone can be the root.
-          for (int k=0; k<trees[j-1].size(); ++k)
+          for (int k=0; k<trees[j-1].size(); ++k) // There're k nodes in left subtree.
             for (int l=0; l<trees[i-j].size(); ++l) {
               TreeNode * root = new TreeNode(j);
               root->left = copyTree(trees[j-1][k]);
@@ -71,15 +74,24 @@ class Solution0 : public Solution {
         }
         trees.push_back(next_trees);
       }
+      for (int i=1; i<trees.size()-1; ++i)
+        for (int j=0; j<trees[i].size(); ++j)
+          deleteTree(trees[i][j]);
       return trees.back();
     }
   private:
     TreeNode * copyTree(TreeNode * root, int offset = 0) {
       if (!root) return root;
       TreeNode * new_root = new TreeNode(root->val + offset);
-      new_root->left = copyTree(root->left);
-      new_root->right = copyTree(root->right);
+      new_root->left = copyTree(root->left, offset);
+      new_root->right = copyTree(root->right, offset);
       return new_root;
+    }
+    void deleteTree(TreeNode * tn) {
+      if (!tn) return;
+      deleteTree(tn->left);
+      deleteTree(tn->right);
+      delete tn;
     }
 };
 

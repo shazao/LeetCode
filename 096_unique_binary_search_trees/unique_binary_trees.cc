@@ -39,8 +39,8 @@ class Solution0 : public Solution {
       rst.push_back(1);   // n == 1;
       for (int i=2; i<=n; ++i) {  // Dynamically programming from 2 to n.
         int n_i = 0;
-        for (int j=0; j<i; ++j)   // root value == 1, 2, 3, ..., n.
-          n_i += rst[j] * rst[i-1-j];
+        for (int j=0; j<i; ++j)       // root value == 1, 2, 3, ..., n.
+          n_i += rst[j] * rst[i-1-j]; // j nodes in left subtree and i-1-j in right one; Multiplication principle.
         rst.push_back(n_i);
       }
       return rst.back();
