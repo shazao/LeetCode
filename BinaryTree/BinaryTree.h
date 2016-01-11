@@ -53,6 +53,8 @@ class BtNode {        // Don't need "<T>".
     void inorderIteratively2();
     void inorderIteratively3();
     bool isBst();
+    bool isBst2();
+    bool isBst3();
 
   private:
     void countLeaf(BtNode * btn, int & count);
@@ -72,6 +74,8 @@ class BtNode {        // Don't need "<T>".
     void inorderIteratively2(BtNode * btn);
     void inorderIteratively3(BtNode * btn);
     bool isBst(BtNode<T> * btn, int * min, int * max);
+    bool isBst2(BtNode<T> * btn, BtNode<T> * & previous);
+    bool isBst3(BtNode<T> * btn, BtNode<T> * max_node, BtNode<T> * min_node);
 
     T element_;
     BtNode * left_;      // Don't need "<T>". 
@@ -620,6 +624,39 @@ bool BtNode<T>::isBst(BtNode<T> * btn, int * min, int * max) {
   if (cv <= l_max || cv >= r_min) 
     return false;
   return true;  // Note: Two important things in recursion: 1, Return value in all branches; 2, ?(Forget now).
+}
+
+template<typename T>
+bool BtNode<T>::isBst2() {
+  BtNode<T> * previous = NULL;
+  return isBst2(this, previous);
+}
+
+template<typename T>
+bool BtNode<T>::isBst2(BtNode<T> * btn, BtNode<T> * & previous) {
+  if (!btn) return true;
+  if (!isBst2(btn->left(), previous))
+    return false;
+  if (previous && previous->element() >= btn->element())
+    return false;
+  previous = btn;
+  if (!isBst2(btn->right(), previous))
+    return false;
+  return true;
+}
+
+template<typename T>
+bool BtNode<T>::isBst3() {
+  return isBst3(this, NULL, NULL);
+}
+
+template<typename T>
+bool BtNode<T>::isBst3(BtNode<T> * btn, BtNode<T> * max_node, BtNode<T> * min_node) {
+  if (!btn) return true;
+  if (max_node && btn->element()>max_node->element() ||
+      min_node && btn->element()<min_node->element())
+    return false;
+  return isBst3(btn->left(), btn, min_node) && isBst3(btn->right(), max_node, btn);
 }
 
 #endif  // __BINARY_TREE_H__

@@ -483,10 +483,14 @@ int main(int argc, char * argv[]) {
   std::cout << "Binary Tree: " << std::endl;
   ibst->displayBinaryTree(node_width_for_display);
   std::cout << std::endl << (ibst->isBst() ? "is " : "is not ") << "binary search tree." << std::endl;
+  std::cout << (ibst->isBst2() ? "is " : "is not ") << "binary search tree(Method 2)." << std::endl;
+  std::cout << (ibst->isBst3() ? "is " : "is not ") << "binary search tree(Method 3)." << std::endl;
   BtNode<int> * ibst2 = buildIntBinaryTree(3);
   std::cout << "Binary Tree: " << std::endl;
   ibst2->displayBinaryTree(node_width_for_display);
   std::cout << std::endl << (ibst2->isBst() ? "is " : "is not ") << "binary search tree." << std::endl;
+  std::cout << (ibst2->isBst2() ? "is " : "is not ") << "binary search tree(Method 2)." << std::endl;
+  std::cout << (ibst2->isBst3() ? "is " : "is not ") << "binary search tree(Method 3)." << std::endl;
 
   bt->deleteBinaryTree();
   cbt->deleteBinaryTree();
