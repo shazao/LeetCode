@@ -65,9 +65,41 @@ class Solution0 : public Solution {
     }
 };
 
+// Nice solution from LeetCode Discuss.
 class Solution1 : public Solution {
   public:
-    
+    bool isValidBST(TreeNode * root) {
+      TreeNode * previous = NULL;
+      return isValidBST(previous, root);
+    }
+
+  private:
+    bool isValidBST(TreeNode * & previous, TreeNode * tn) {
+      if (!tn) return true;
+      if (!isValidBST(previous, tn->left)) return false;
+      if (previous && previous->val >= tn->val)
+        return false;
+      previous = tn;
+      if (!isValidBST(previous, tn->right)) return false;
+      return true;
+    }
+};
+
+// Nice solution from LeetCode Discuss.
+class Solution2 : public Solution {
+  public:
+    bool isValidBST(TreeNode * root) {
+      return isValidBST(root, NULL, NULL);
+    }
+
+  private:
+    bool isValidBST(TreeNode * tn, TreeNode * max_node, TreeNode * min_node) {
+      if (!tn) return true;
+      if (max_node && tn->val>=max_node->val ||
+          min_node && tn->val<=min_node->val)
+        return false;
+      return isValidBST(tn->left, tn, min_node) && isValidBST(tn->right, max_node, tn);
+    }
 };
 
 
