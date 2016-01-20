@@ -431,6 +431,9 @@ int main(int argc, char * argv[]) {
   std::cout << "Traverse Binary Tree " << tree_idx << " by bottom-up level order:" << std::endl;
   bt->levelOrederBottomUp();
   std::cout << std::endl;
+  std::cout << "Traverse Binary Tree " << tree_idx << " by zigzag level order(Multiple lines):" << std::endl;
+  bt->zigzagLevelOrder();
+  std::cout << std::endl;
 
   std::cout << "Binary Tree " << tree_idx << std::endl;
   bt->displayBinaryTree(node_width_for_display);

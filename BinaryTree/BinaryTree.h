@@ -55,6 +55,7 @@ class BtNode {        // Don't need "<T>".
     bool isBst();
     bool isBst2();
     bool isBst3();
+    void zigzagLevelOrder();
 
   private:
     void countLeaf(BtNode * btn, int & count);
@@ -657,6 +658,34 @@ bool BtNode<T>::isBst3(BtNode<T> * btn, BtNode<T> * max_node, BtNode<T> * min_no
       min_node && btn->element()<min_node->element())
     return false;
   return isBst3(btn->left(), btn, min_node) && isBst3(btn->right(), max_node, btn);
+}
+
+// LeetCode 103.
+template<typename T>
+void BtNode<T>::zigzagLevelOrder() {
+  std::stack<BtNode<T>*> stk0;
+  std::stack<BtNode<T>*> stk1;
+  stk0.push(this);
+  int direction = 0;
+  std::stack<BtNode<T>*> * cs = &stk0; // current stack
+  std::stack<BtNode<T>*> * ns = &stk1; // next stack
+  while (!cs->empty()) {
+    while (!cs->empty()) {
+      BtNode<T> * btn = cs->top();
+      std::cout << ' ' << btn->element();
+      if (direction) {
+        if (BtNode<T> * right = btn->right()) ns->push(right);
+        if (BtNode<T> * left = btn->left()) ns->push(left);
+      } else {
+        if (BtNode<T> * left = btn->left()) ns->push(left);
+        if (BtNode<T> * right = btn->right()) ns->push(right);
+      }
+      cs->pop();
+    }
+    std::cout << std::endl;
+    direction ^= 1;
+    std::swap(cs, ns);
+  }
 }
 
 #endif  // __BINARY_TREE_H__
