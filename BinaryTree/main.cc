@@ -391,16 +391,14 @@ BtNode<T> * lowestCommonAncestor(BtNode<T> * root, BtNode<T> * p, BtNode<T> * q)
 // LeetCode 105
 template<typename T>
 BtNode<T> * constructBtFromPreorderInorderTraversal(std::vector<T> & preorder, std::vector<T> & inorder,
-                                                    size_t l, size_t r, size_t root) {
-  if (l >= r) return NULL;
-  if (l+1 == r) return new BtNode<T>(inorder[l]);
-  BtNode<T> * parent = new BtNode<T>(preorder[root]);
+                                                    size_t l, size_t r, size_t & root_idx) {
+  BtNode<T> * parent = new BtNode<T>(preorder[root_idx]);
   int i = l;
   for (; i<r; ++i)
-    if (inorder[i] == preorder[root])
+    if (inorder[i] == preorder[root_idx])
       break;
-  parent->left() = constructBtFromPreorderInorderTraversal(preorder, inorder, l, i, ++root);
-  parent->right() = constructBtFromPreorderInorderTraversal(preorder, inorder, i+1, r, i+1);
+  if (i > l) parent->left() = constructBtFromPreorderInorderTraversal(preorder, inorder, l, i, ++root_idx);
+  if (r > i+1) parent->right() = constructBtFromPreorderInorderTraversal(preorder, inorder, i+1, r, ++root_idx);
   return parent;
 }
 
@@ -409,8 +407,8 @@ BtNode<T> * constructBtFromPreorderInorderTraversal(std::vector<T> & preorder, s
   if (preorder.empty() || inorder.empty()) return NULL;
   size_t ps = preorder.size(), is = inorder.size();
   if (ps != is) return NULL;
-  size_t root = 0;
-  return constructBtFromPreorderInorderTraversal(preorder, inorder, 0, ps, root);
+  size_t root_idx = 0;
+  return constructBtFromPreorderInorderTraversal(preorder, inorder, 0, ps, root_idx);
 }
 
 int main(int argc, char * argv[]) {
@@ -521,8 +519,8 @@ int main(int argc, char * argv[]) {
   std::cout << (ibst2->isBst3() ? "is " : "is not ") << "binary search tree(Method 3)." << std::endl;
 
   // Construce Binary Tree from preorder and inorder traversal
-  std::vector<int> preorder({1, 2, 4, 5, 3, 6, 7});
-  std::vector<int> inorder({4, 2, 5, 1, 6, 3, 7});
+  std::vector<int> preorder({4, 1, 2, 3, 5, 6, 7});
+  std::vector<int> inorder({1, 2, 3, 4, 6, 7, 5});
   std::cout << "From the given preorder and inorder traversal, I guess the binary tree is: " << std::endl;
   constructBtFromPreorderInorderTraversal(preorder, inorder)->displayBinaryTree(node_width_for_display);
 
