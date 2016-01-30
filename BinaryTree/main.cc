@@ -433,6 +433,24 @@ BtNode<T> * constructBtFromInorderAndPostorderTraversal(std::vector<T> & inorder
   return constructBtFromInorderAndPostorderTraversal(inorder, postorder, 0, root_idx, root_idx);
 }
 
+// LeetCode 108
+template<typename T>
+BtNode<T> * sortedArrayToBST(std::vector<T> & nums, int l, int r) {
+  int m = l + (r-l)/2;
+  BtNode<T> * root = new BtNode<T>(nums[m]);
+  if (m > l) root->left() = sortedArrayToBST(nums, l, m);
+  if (r > m+1) root->right() = sortedArrayToBST(nums, m+1, r);
+  return root;
+}
+
+template<typename T>
+BtNode<T> * sortedArrayToBST(std::vector<T> & nums) {
+  if (nums.empty()) return NULL;
+  return sortedArrayToBST(nums, 0, nums.size());
+}
+
+// LeetCode 109
+
 int main(int argc, char * argv[]) {
 
   if (argc != 2)
@@ -560,6 +578,14 @@ int main(int argc, char * argv[]) {
     BtNode<int> * tibt = constructBtFromInorderAndPostorderTraversal(inorder, postorder);
     tibt->displayBinaryTree(node_width_for_display);
     std::cout << "Its preorder traversal: "; tibt->preOrder(); std::cout << std::endl;
+    tibt->deleteBinaryTree(); tibt = NULL;
+  }
+  // Convert Sorted Array to Binary Search Tree
+  {
+    std::vector<int> nums({1, 2, 3, 4, 5});
+    std::cout << "From the given inorder traversal, I guess the height balanced binary search tree is: " << std::endl;
+    BtNode<int> * tibt = sortedArrayToBST(nums);
+    tibt->displayBinaryTree(node_width_for_display);
     tibt->deleteBinaryTree(); tibt = NULL;
   }
 
