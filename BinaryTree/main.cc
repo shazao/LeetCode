@@ -411,6 +411,28 @@ BtNode<T> * constructBtFromPreorderInorderTraversal(std::vector<T> & preorder, s
   return constructBtFromPreorderInorderTraversal(preorder, inorder, 0, ps, root_idx);
 }
 
+// LeetCode 106
+template<typename T>
+BtNode<T> * constructBtFromInorderAndPostorderTraversal(std::vector<T> & inorder, std::vector<T> & postorder, 
+                                                        int l, int r, int & root_idx) {
+  T root_value = postorder[root_idx];
+  BtNode<T> * root = new BtNode<T>(root_value);
+  int i = r;
+  for (; i>=0; --i)
+    if (inorder[i] == root_value)
+      break;
+  if (r >= i+1) root->right() = constructBtFromInorderAndPostorderTraversal(inorder, postorder, i+1, r, --root_idx);
+  if (i-1 >= l) root->left() = constructBtFromInorderAndPostorderTraversal(inorder, postorder, l, i-1, --root_idx);
+  return root;
+}
+
+template<typename T>
+BtNode<T> * constructBtFromInorderAndPostorderTraversal(std::vector<T> & inorder, std::vector<T> & postorder) {
+  if (inorder.empty()) return NULL;
+  int root_idx = postorder.size() - 1;
+  return constructBtFromInorderAndPostorderTraversal(inorder, postorder, 0, root_idx, root_idx);
+}
+
 int main(int argc, char * argv[]) {
 
   if (argc != 2)
@@ -519,10 +541,28 @@ int main(int argc, char * argv[]) {
   std::cout << (ibst2->isBst3() ? "is " : "is not ") << "binary search tree(Method 3)." << std::endl;
 
   // Construce Binary Tree from preorder and inorder traversal
-  std::vector<int> preorder({4, 1, 2, 3, 5, 6, 7});
-  std::vector<int> inorder({1, 2, 3, 4, 6, 7, 5});
-  std::cout << "From the given preorder and inorder traversal, I guess the binary tree is: " << std::endl;
-  constructBtFromPreorderInorderTraversal(preorder, inorder)->displayBinaryTree(node_width_for_display);
+  {
+    //std::vector<int> preorder({4, 1, 2, 3, 5, 6, 7});
+    //std::vector<int> inorder({1, 2, 3, 4, 6, 7, 5});
+    std::vector<int> preorder({1, 3, 2, 5, 4});
+    std::vector<int> inorder({1, 2, 3, 4, 5});
+    std::cout << "From the given preorder and inorder traversal, I guess the binary tree is: " << std::endl;
+    BtNode<int> * tibt = constructBtFromPreorderInorderTraversal(preorder, inorder);
+    tibt->displayBinaryTree(node_width_for_display);
+    std::cout << "Its postorder traversal: "; tibt->postOrder(); std::cout << std::endl;
+    tibt->deleteBinaryTree(); tibt = NULL;
+  }
+  // Construce Binary Tree from postorder and inorder traversal
+  {
+    std::vector<int> inorder({1, 2, 3, 4, 5});
+    std::vector<int> postorder({2, 4, 5, 3, 1});
+    std::cout << "From the given postorder and inorder traversal, I guess the binary tree is: " << std::endl;
+    BtNode<int> * tibt = constructBtFromInorderAndPostorderTraversal(inorder, postorder);
+    tibt->displayBinaryTree(node_width_for_display);
+    std::cout << "Its preorder traversal: "; tibt->preOrder(); std::cout << std::endl;
+    tibt->deleteBinaryTree(); tibt = NULL;
+  }
+
 
   bt->deleteBinaryTree();
   cbt->deleteBinaryTree();

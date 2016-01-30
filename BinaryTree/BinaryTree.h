@@ -33,6 +33,8 @@ class BtNode {        // Don't need "<T>".
     BtNode * & left() { return left_; }                                 // Don't need "<T>". 
     BtNode * & right() { return right_; }                               // Don't need "<T>". 
 
+    void postOrder();
+    void preOrder();
     int countLeaf();
     BtNode * copyBinaryTree();
     void deleteBinaryTree();    // Set 'this' to NULL is client's responsibility.
@@ -58,6 +60,8 @@ class BtNode {        // Don't need "<T>".
     void zigzagLevelOrder();
 
   private:
+    void postOrder(BtNode * btn);
+    void preOrder(BtNode * btn);
     void countLeaf(BtNode * btn, int & count);
     BtNode * copyBinaryTree(BtNode * btn);
     void deleteBinaryTree(BtNode * btn);    // Set 'this' to NULL is client's responsibility.
@@ -82,6 +86,32 @@ class BtNode {        // Don't need "<T>".
     BtNode * left_;      // Don't need "<T>". 
     BtNode * right_;     // Don't need "<T>". 
 };
+
+template<typename T>
+void BtNode<T>::postOrder(BtNode<T> * btn) {
+  if (!btn) return;
+  postOrder(btn->left());
+  postOrder(btn->right());
+  std::cout << ' ' << btn->element();
+}
+
+template<typename T>
+void BtNode<T>::postOrder() {
+  postOrder(this);
+}
+
+template<typename T>
+void BtNode<T>::preOrder(BtNode<T> * btn) {
+  if (!btn) return;
+  std::cout << ' ' << btn->element();
+  preOrder(btn->left());
+  preOrder(btn->right());
+}
+
+template<typename T>
+void BtNode<T>::preOrder() {
+  preOrder(this);
+}
 
 template<typename T>
 int BtNode<T>::countLeaf() {
