@@ -5,7 +5,8 @@ Note:
 You may assume that duplicates do not exist in the tree.
 */
 
-// Star: 
+// Star: 8.8.
+// Info: Similar to LeetCode 105.
 
 #include <iostream>
 #include <vector>
@@ -18,6 +19,7 @@ class Solution {
     virtual TreeNode * buildTree(std::vector<int> & inorder, std::vector<int> & postorder) = 0; // Pure virtual, or Solutionx may not have data members.
 };
 
+// My solution.
 class Solution0 : public Solution {
   public:
     TreeNode * buildTree(std::vector<int> & inorder, std::vector<int> & postorder) {
