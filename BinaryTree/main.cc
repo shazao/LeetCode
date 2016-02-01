@@ -2,6 +2,24 @@
 #include <cstdlib>
 #include "BinaryTree.h"
 
+template<typename T>
+class ListNode {
+  public:
+    ListNode * next;
+    ListNode(T x) : val(x), next(NULL) {}
+    T val;
+};
+
+template<typename T>
+void printList(ListNode<T> * head) {
+  ListNode<T> * node = head;
+  while (node) {
+    std::cout << node->val << ' ';
+    node = node->next;
+  }
+  std::cout << std::endl;
+}
+
 BtNode<char> * buildBinaryTree(int idx)
 {
 	// 9 BtNode pointers; points to the 9 items in the tree
@@ -450,6 +468,28 @@ BtNode<T> * sortedArrayToBST(std::vector<T> & nums) {
 }
 
 // LeetCode 109
+template<typename T>
+BtNode<T> * convertSortedListToBinarySearchTree(ListNode<T> * & inorder_node, size_t len) {
+  if (!len) return NULL;
+  BtNode<T> * btn = new BtNode<T>(0);
+  btn->left() = convertSortedListToBinarySearchTree(inorder_node, len/2);
+  btn->element() = inorder_node->val;
+  inorder_node = inorder_node->next;
+  btn->right() = convertSortedListToBinarySearchTree(inorder_node, len - len/2 -1);
+  return btn;
+}
+
+template<typename T>
+BtNode<T> * convertSortedListToBinarySearchTree(ListNode<T> * head) {
+  size_t len = 0;
+  ListNode<T> * ln = head;
+  while (ln) {
+    ++ len;
+    ln = ln->next;
+  }
+  ListNode<T> * inorder_node = head;
+  return convertSortedListToBinarySearchTree(inorder_node, len);
+}
 
 int main(int argc, char * argv[]) {
 
@@ -576,17 +616,40 @@ int main(int argc, char * argv[]) {
     std::vector<int> postorder({2, 4, 5, 3, 1});
     std::cout << "From the given postorder and inorder traversal, I guess the binary tree is: " << std::endl;
     BtNode<int> * tibt = constructBtFromInorderAndPostorderTraversal(inorder, postorder);
-    tibt->displayBinaryTree(node_width_for_display);
-    std::cout << "Its preorder traversal: "; tibt->preOrder(); std::cout << std::endl;
-    tibt->deleteBinaryTree(); tibt = NULL;
+    if (tibt) {
+      tibt->displayBinaryTree(node_width_for_display);
+      std::cout << "Its preorder traversal: "; tibt->preOrder(); std::cout << std::endl;
+      tibt->deleteBinaryTree(); tibt = NULL;
+    }
   }
   // Convert Sorted Array to Binary Search Tree
   {
     std::vector<int> nums({1, 2, 3, 4, 5});
     std::cout << "From the given inorder traversal, I guess the height balanced binary search tree is: " << std::endl;
     BtNode<int> * tibt = sortedArrayToBST(nums);
-    tibt->displayBinaryTree(node_width_for_display);
-    tibt->deleteBinaryTree(); tibt = NULL;
+    if (tibt) {
+      tibt->displayBinaryTree(node_width_for_display);
+      tibt->deleteBinaryTree(); tibt = NULL;
+    }
+  }
+  // Convert Sorted List to Binary Search Tree
+  {
+    ListNode<int> * dummy = new ListNode<int>(0);
+    ListNode<int> * node = dummy;
+    for (int i=0; i<7; ++i) {
+      node->next = new ListNode<int>(i);
+      node = node->next;
+    }
+    ListNode<int> * l = dummy->next;
+    delete dummy;
+    std::cout << "From the given inorder traversal: ";
+    printList(l);
+    std::cout << "I guess the height balanced binary search tree is: " << std::endl;
+    BtNode<int> * tibt = convertSortedListToBinarySearchTree(l);
+    if (tibt) {
+      tibt->displayBinaryTree(node_width_for_display);
+      tibt->deleteBinaryTree(); tibt = NULL;
+    }
   }
 
 

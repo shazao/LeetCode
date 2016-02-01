@@ -28,8 +28,9 @@ class BtNode {        // Don't need "<T>".
     BtNode(const T & element, BtNode * left=NULL, BtNode * right=NULL)  // Don't need "<T>".
       : element_(element), left_(left), right_(right) { };
     const T & element() const { return element_; }
-    BtNode * left() const { return left_; }                             // Don't need "<T>". 
-    BtNode * right() const { return right_; }                           // Don't need "<T>". 
+    T & element() { return element_; }
+    const BtNode * left() const { return left_; }                             // Don't need "<T>". 
+    const BtNode * right() const { return right_; }                           // Don't need "<T>". 
     BtNode * & left() { return left_; }                                 // Don't need "<T>". 
     BtNode * & right() { return right_; }                               // Don't need "<T>". 
 
