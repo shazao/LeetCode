@@ -553,8 +553,19 @@ int main(int argc, char * argv[]) {
   int sum = 0;
   std::cout << "Integer Binary Tree " << tree_idx << std::endl;
   ibt->displayBinaryTree(node_width_for_display);
-  for (sum=0; sum<=20; ++sum)
-    std::cout << "has " << (ibt->hasPathSum(sum) ? "" : "not ") << "a path along which the sum of items is " << sum << "." << std::endl;
+  for (sum=0; sum<=20; ++sum) {
+    bool has_path = ibt->hasPathSum(sum);
+    std::cout << "has " << (has_path ? "" : "not ") << "a path along which the sum of items is " << sum << "." << std::endl;
+    if (has_path) {
+      std::cout << "They are: " << std::endl;
+      std::vector<std::vector<int> > paths = ibt->pathSum(sum);
+      for (size_t i=0; i<paths.size(); ++i) {
+        for (size_t j=0; j<paths[i].size(); ++j)
+          std::cout << ' ' << paths[i][j];
+        std::cout << std::endl;
+      }
+    }
+  }
 
   std::cout << "Binary Tree inverted form Binary Tree " << tree_idx << std::endl;
   bt->displayBinaryTree(node_width_for_display);

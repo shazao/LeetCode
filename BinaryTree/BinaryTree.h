@@ -50,6 +50,7 @@ class BtNode {        // Don't need "<T>".
     bool isBalanced2();
     int minDepth();
     bool hasPathSum(int sum);
+    std::vector<std::vector<int> > pathSum(int sum);
     void invert();
     void inOrder();
     void inorderIteratively();
@@ -74,6 +75,7 @@ class BtNode {        // Don't need "<T>".
     bool isBalanced2(BtNode * btn, int & height);
     int minDepth(BtNode * btn);
     bool hasPathSum(BtNode * btn, int sum);
+    void pathSum(std::vector<std::vector<int> > & paths, std::vector<int> & path, BtNode<T> * btn, int sum);
     BtNode * invert(BtNode * btn);
     void inOrder(BtNode * btn);
     void inorderIteratively(BtNode * btn);
@@ -514,6 +516,32 @@ bool BtNode<T>::hasPathSum(int sum) {
     return true;
   else
     return false;
+}
+
+template<typename T>
+void BtNode<T>::pathSum(std::vector<std::vector<int> > & paths, std::vector<int> & path, BtNode<T> * btn, int sum) {
+  path.push_back(btn->element());
+  if (btn->left()==NULL && btn->right()==NULL)
+    if (btn->element() == sum)
+      paths.push_back(path);
+
+  sum -= btn->element();
+
+  if (BtNode<T> * left = btn->left())
+    pathSum(paths, path, left, sum);
+  if (BtNode<T> * right = btn->right())
+    pathSum(paths, path, right, sum);
+
+  path.pop_back();
+}
+
+// LeetCode 113.
+template<typename T>
+std::vector<std::vector<int> > BtNode<T>::pathSum(int sum) {
+  std::vector<std::vector<int> > paths;
+  std::vector<int> path;
+  pathSum(paths, path, this, sum);
+  return paths;
 }
 
 template<typename T>
