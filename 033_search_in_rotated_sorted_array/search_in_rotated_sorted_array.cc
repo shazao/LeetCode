@@ -88,7 +88,7 @@ class Solution1 : public Solution {
     }
 };
 
-// A brilliant solution form LeetCode Discuss.
+// A brilliant solution from LeetCode Discuss.
 class Solution2 : public Solution {
   public:
     int search(std::vector<int> & nums, int target) {
