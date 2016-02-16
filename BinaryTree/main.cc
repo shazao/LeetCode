@@ -491,6 +491,29 @@ BtNode<T> * convertSortedListToBinarySearchTree(ListNode<T> * head) {
   return convertSortedListToBinarySearchTree(inorder_node, len);
 }
 
+// LeetCode 114
+template<typename T>
+void flatten(BtNode<T> * root, BtNode<T> * & previous) {
+  if (root) {
+    BtNode<T> * right = root->right();
+    BtNode<T> * left = root->left();
+    if (left == NULL)
+      previous = root;
+    root->left() = NULL;
+    root->right() = left;
+    flatten(left, previous);
+    previous->right() = right;
+    flatten(right, previous);
+  }
+}
+
+template<typename T>
+void flatten(BtNode<T> * root) {
+  BtNode<T> * previous = NULL;
+  flatten(root, previous);
+  return;
+}
+
 int main(int argc, char * argv[]) {
 
   if (argc != 2)
@@ -661,6 +684,16 @@ int main(int argc, char * argv[]) {
       tibt->displayBinaryTree(node_width_for_display);
       tibt->deleteBinaryTree(); tibt = NULL;
     }
+  }
+  // Flatten binary tree to linked list
+  {
+    BtNode<char> * bt_to_be_flattened = buildBinaryTree(tree_idx);
+    std::cout << std::endl << "Flattened " << std::endl;
+    bt_to_be_flattened->displayBinaryTree(node_width_for_display);
+    std::cout << std::endl << "is " << std::endl;
+    flatten(bt_to_be_flattened);
+    bt_to_be_flattened->displayBinaryTree(node_width_for_display);
+    bt_to_be_flattened->deleteBinaryTree();
   }
 
 
