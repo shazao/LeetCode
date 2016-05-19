@@ -20,7 +20,8 @@ All words have the same length.
 All words contain only lowercase alphabetic characters.
 */
 
-// Star: 
+// Star: 9.0
+// Info.: A good exercise of Graph.
 
 #include <iostream>
 #include <vector>
