@@ -20,7 +20,7 @@ word = "SEE", -> returns true,
 word = "ABCB", -> returns false.
 */
 
-// Star: 
+// Star: 8.8.
 
 #include <iostream>
 #include <vector>
