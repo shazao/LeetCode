@@ -21,6 +21,7 @@ All words contain only lowercase alphabetic characters.
 */
 
 // Star: 9.3.
+// Info.: A good exercise of Graph.
 // TODO: Try two-end search method.
 
 #include <iostream>
