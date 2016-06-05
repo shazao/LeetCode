@@ -60,6 +60,7 @@ class BtNode {        // Don't need "<T>".
     bool isBst2();
     bool isBst3();
     void zigzagLevelOrder();
+    int sumPaths();
 
   private:
     void postOrder(BtNode * btn);
@@ -84,6 +85,7 @@ class BtNode {        // Don't need "<T>".
     bool isBst(BtNode<T> * btn, int * min, int * max);
     bool isBst2(BtNode<T> * btn, BtNode<T> * & previous);
     bool isBst3(BtNode<T> * btn, BtNode<T> * max_node, BtNode<T> * min_node);
+    void sumPaths(BtNode<T> * btn, int & sum, std::vector<T> & path);
 
     T element_;
     BtNode * left_;      // Don't need "<T>". 
@@ -745,6 +747,34 @@ void BtNode<T>::zigzagLevelOrder() {
     direction ^= 1;
     std::swap(cs, ns);
   }
+}
+
+// LeetCode 129.
+template<typename T>
+int BtNode<T>::sumPaths() {
+  int sum = 0;
+  std::vector<T> path;
+  sumPaths(this, sum, path);
+  return sum;
+}
+
+template<typename T>
+void BtNode<T>::sumPaths(BtNode<T> * btn, int & sum, std::vector<T> & path) {
+  path.push_back(btn->element());
+  if (btn->left()==NULL && btn->right()==NULL) {
+    for (int power = 1, i = path.size()-1; i>=0; --i) {
+      sum += path[i] * power;
+      power *= 10;
+    }
+    path.pop_back();
+    return;
+  }
+  if (BtNode<T> * left = btn->left())
+    sumPaths(left, sum, path);
+  if (BtNode<T> * right = btn->right())
+    sumPaths(right, sum, path);
+  path.pop_back();
+  return;
 }
 
 #endif  // __BINARY_TREE_H__
