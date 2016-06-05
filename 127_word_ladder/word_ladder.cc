@@ -20,7 +20,8 @@ All words have the same length.
 All words contain only lowercase alphabetic characters.
 */
 
-// Star: 
+// Star: 9.3.
+// TODO: Try two-end search method.
 
 #include <iostream>
 #include <vector>
@@ -46,7 +47,7 @@ class Solution0 : public Solution {
       if (bfs(beginWord, endWord, wordList, &length)) return length;
       else return 0;
     }
-    // However, it more likes a DFS algorithm.
+    // However, it is DFS indeed.
     bool bfs(std::string & word, std::string & endWord, std::unordered_set<std::string> & wordList, int * length, bool the_last_one = false) {
       if (word == endWord) return true;
       if (the_last_one && wordList.empty()) return false;
@@ -109,6 +110,41 @@ private:
   } 
 };
 
+/* Let the begin word be the "center", and search the end word "circle" by "circle" in BFS manner.
+ * I tried it using recursion, but it turns out to be in vain. So I redo it as Solution1. */
+class Solution2 : public Solution {
+  public:
+    int ladderLength(std::string beginWord, std::string endWord, std::unordered_set<std::string> & wordList) {
+      int length = 1;
+      wordList.insert(endWord);
+      std::queue<std::string> to_be_visited;
+      to_be_visited.push(beginWord);
+      while (!to_be_visited.empty()) {
+        size_t tbvs = to_be_visited.size();
+        for (size_t i=0; i<tbvs; ++i) {
+          std::string word = to_be_visited.front();
+          to_be_visited.pop();
+          if (word == endWord) return length;
+          findNextCircle(word, to_be_visited, wordList);
+        }
+        ++ length;
+      }
+      return 0;
+    }
+  private:
+    void findNextCircle(std::string & word, std::queue<std::string> & to_be_visited, std::unordered_set<std::string> & wordList) {
+      for (size_t i=0; i<word.size(); ++i) {
+        std::string wd(word);
+        for (size_t j=0; j<26; ++j) {
+          wd[i] = 'a' + j;
+          if (wd[i]!=word[i] && wordList.find(wd)!=wordList.end()) {
+            to_be_visited.push(wd);
+            wordList.erase(wd);
+          }
+        }
+      }
+    }
+};
 
 int main(int argc, char * argv[]) {
 
@@ -136,6 +172,7 @@ int main(int argc, char * argv[]) {
   std::vector<Solution*> solutions;
   Solution0 s0; solutions.push_back(&s0);
   Solution1 s1; solutions.push_back(&s1);
+  Solution2 s2; solutions.push_back(&s2);
   for (size_t si=0; si<solutions.size(); ++si) {
     std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
     Profiler perf;
