@@ -699,7 +699,7 @@ int main(int argc, char * argv[]) {
     // Sum root to leaf numbers.
     std::cout << "Integer Binary Tree " << tree_idx << std::endl;
     ibt->displayBinaryTree(node_width_for_display);
-    std::cout << "sum of whose all paths is: " << ibt->sumPaths() << std::endl;
+    std::cout << "sum of whose all paths is: " << ibt->sumPaths() << '(' << ibt->sumPaths2() << ')' << std::endl;
   }
 
 

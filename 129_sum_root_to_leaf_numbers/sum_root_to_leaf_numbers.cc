@@ -16,7 +16,7 @@ The root-to-leaf path 1->3 represents the number 13.
 Return the sum = 12 + 13 = 25.
 */
 
-// Star: 
+// Star: 8.8.
 
 #include <iostream>
 #include <vector>
@@ -31,12 +31,39 @@ class Solution {
 
 class Solution0 : public Solution {
   public:
-    
+    Solution0() : sum_(0) { }
+    int sumNumbers(TreeNode * root) {
+      if (!root) return 0;
+      path_.push_back(root->val);
+      if (root->left==NULL && root->right==NULL) {
+        for (int power=1, i=path_.size()-1; i>=0; --i) {
+          sum_ += path_[i] * power;
+          power *= 10;
+        }
+      }
+      if (root->left) sumNumbers(root->left);
+      if (root->right) sumNumbers(root->right);
+      path_.pop_back();
+      return sum_;
+    }
+
+  private:
+    int sum_;
+    std::vector<int> path_;
 };
 
 class Solution1 : public Solution {
   public:
-    
+    int sumNumbers(TreeNode * root) {
+      return sumNumbersUtil(root, 0);
+    }
+
+  private:
+    int sumNumbersUtil(TreeNode * tn, int sum) {
+      if (!tn) return 0;
+      if (tn->left || tn->right) return sumNumbersUtil(tn->left, sum*10+tn->val) + sumNumbersUtil(tn->right, sum*10+tn->val);
+      else return sum*10 + tn->val;
+    }
 };
 
 

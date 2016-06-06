@@ -61,6 +61,7 @@ class BtNode {        // Don't need "<T>".
     bool isBst3();
     void zigzagLevelOrder();
     int sumPaths();
+    int sumPaths2();
 
   private:
     void postOrder(BtNode * btn);
@@ -86,6 +87,7 @@ class BtNode {        // Don't need "<T>".
     bool isBst2(BtNode<T> * btn, BtNode<T> * & previous);
     bool isBst3(BtNode<T> * btn, BtNode<T> * max_node, BtNode<T> * min_node);
     void sumPaths(BtNode<T> * btn, int & sum, std::vector<T> & path);
+    int sumPaths2(BtNode * btn, int sum);
 
     T element_;
     BtNode * left_;      // Don't need "<T>". 
@@ -775,6 +777,18 @@ void BtNode<T>::sumPaths(BtNode<T> * btn, int & sum, std::vector<T> & path) {
     sumPaths(right, sum, path);
   path.pop_back();
   return;
+}
+
+template<typename T>
+int BtNode<T>::sumPaths2() {
+  return sumPaths2(this, 0);
+}
+
+template<typename T>
+int BtNode<T>::sumPaths2(BtNode<T> * btn, int sum) {
+  if (!btn) return 0;
+  if (btn->left() || btn->right()) return sumPaths2(btn->left(), sum*10+btn->element()) + sumPaths2(btn->right(), sum*10+btn->element());
+  else return sum*10 + btn->element();
 }
 
 #endif  // __BINARY_TREE_H__
