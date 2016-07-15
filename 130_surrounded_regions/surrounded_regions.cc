@@ -14,6 +14,10 @@ X X X X
 X X X X
 X X X X
 X O X X
+
+Test cases:
+["XOOOOOOOOOOOOOOOOOOO","OXOOOOXOOOOOOOOOOOXX","OOOOOOOOXOOOOOOOOOOX","OOXOOOOOOOOOOOOOOOXO","OOOOOXOOOOXOOOOOXOOX","XOOOXOOOOOXOXOXOXOXO","OOOOXOOXOOOOOXOOXOOO","XOOOXXXOXOOOOXXOXOOO","OOOOOXXXXOOOOXOOXOOO","XOOOOXOOOOOOXXOOXOOX","OOOOOOOOOOXOOXOOOXOX","OOOOXOXOOXXOOOOOXOOO","XXOOOOOXOOOOOOOOOOOO","OXOXOOOXOXOOOXOXOXOO","OOXOOOOOOOXOOOOOXOXO","XXOOOOOOOOXOXXOOOXOO","OOXOOOOOOOXOOXOXOXOO","OOOXOOOOOXXXOOXOOOXO","OOOOOOOOOOOOOOOOOOOO","XOOOOXOOOXXOOXOXOXOO"]
+["OOOOOOOOXOOOOOXOOOOO","OOOOOOOXOOOOOOOOOOOO","XOOXOXOOOOXOOXOOOOOO","OOOOOOOOOOOOOOOOOXXO","OXXOOOOOOXOOOOOOOOOO","OOOOXOOOOOOXOOOOOXXO","OOOOOOOXOOOOOOOOOOOO","OOOOOOOOOOOOOXOOOOOO","OOOOOOOOOOOOOOOOOOXO","OOOOOXOOOOOOOOOOOOOO","OOOOOOOOXOOOOOOOOOOO","OOOOXOOOOXOOOOOOOOOO","OOOOOOOOXOOOOOOOOOOO","XOOOOOOOOXXOOOOOOOOO","OOOOOOOOOOOXOOOOOOOO","OOOOXOOOOOOOOXOOOOOX","OOOOOXOOOOOOOOOXOXOO","OXOOOOOOOOOOOOOOOOOO","OOOOOOOOXXOOOXOOXOOX","OOOOOOOOOOOOOOOOOOOO"]
 */
 
 // Star: 
@@ -40,35 +44,33 @@ class Solution0 : public Solution {
       if (m == 0) return;
       size_t n = board[0].size();
       if (n == 0) return;
+      std::unordered_set<int> visited;
       for (size_t i = 1; i < m-1; ++i)
         for (size_t j = 1; j < n-1; ++j) {
-          if (board[i][j] == 'O' && visited_.find(i*n + j)==visited_.end()) {
+          if (board[i][j] == 'O' && visited.find(i*n + j)==visited.end()) {
             std::queue<std::pair<size_t, size_t> > q; q.push(std::make_pair(i, j));
             bool region = true;
+            std::vector<int> x_, y_;
             while (!q.empty()) {
               size_t x = q.front().first, y = q.front().second;
-              visited_.insert(x*n + y);
-              x_.push_back(x); y_.push_back(y);
               q.pop();
-              if (x==0 || x==m-1 || y == 0 || y == n-1) { region = false; continue; }
-              if (board[x][y-1] == 'O' && visited_.find(x*n + y - 1)==visited_.end()) q.push(std::make_pair(x, y-1));
-              if (board[x+1][y] == 'O' && visited_.find((x+1)*n + y)==visited_.end()) q.push(std::make_pair(x+1, y));
-              if (board[x][y+1] == 'O' && visited_.find(x*n + y + 1)==visited_.end()) q.push(std::make_pair(x, y+1));
-              if (board[x-1][y] == 'O' && visited_.find((x-1)*n + y)==visited_.end()) q.push(std::make_pair(x-1, y));
+              if (visited.find(x*n + y) == visited.end()) {
+                visited.insert(x*n + y);
+                x_.push_back(x); y_.push_back(y);
+                if (x==0 || x==m-1 || y == 0 || y == n-1) { region = false; continue; }
+                if (board[x][y-1] == 'O' && visited.find(x*n + y - 1)==visited.end()) q.push(std::make_pair(x, y-1));
+                if (board[x+1][y] == 'O' && visited.find((x+1)*n + y)==visited.end()) q.push(std::make_pair(x+1, y));
+                if (board[x][y+1] == 'O' && visited.find(x*n + y + 1)==visited.end()) q.push(std::make_pair(x, y+1));
+                if (board[x-1][y] == 'O' && visited.find((x-1)*n + y)==visited.end()) q.push(std::make_pair(x-1, y));
+              }
             }
             if (region)
-              for (size_t i=0; i<x_.size(); ++i) {
-                std::cout << "Changed " << x_[i] << ", " << y_[i] << "(" << board[x_[i]][y_[i]] << ") ";
+              for (size_t i=0; i<x_.size(); ++i)
                 board[x_[i]][y_[i]] = 'X';
-                std::cout << "into " << board[x_[i]][y_[i]] << "." << std::endl;
-              }
             x_.clear(); y_.clear();
           }
         }
     }
-  private:
-    std::unordered_set<int> visited_;
-    std::vector<int> x_, y_;
 };
 
 // My second solution with space optimization, but only beats 3.39%.
@@ -109,9 +111,50 @@ class Solution1 : public Solution {
     }
 };
 
+// My third solution with more space optimization, beats 32.82%.
+class Solution2 : public Solution {
+  public:
+    void solve(std::vector<std::vector<char> > & board) {
+      size_t m = board.size();
+      if (m <= 2) return;
+      size_t n = board[0].size();
+      if (n <= 2) return;
+      std::vector<size_t> border_o_idx;
+      for (size_t j=0; j<n; ++j) if (board[0][j] == 'O') border_o_idx.push_back(j);
+      for (size_t j=0; j<n; ++j) if (board[m-1][j] == 'O') border_o_idx.push_back((m-1)*n + j);
+      for (size_t i=1; i<m-1; ++i) if (board[i][0] == 'O') border_o_idx.push_back(i*n);
+      for (size_t i=1; i<m-1; ++i) if (board[i][n-1] == 'O') border_o_idx.push_back(i*n + n - 1);
+      for (size_t i=0; i<border_o_idx.size(); ++i) {
+        size_t x = border_o_idx[i] / n, y = border_o_idx[i] % n;
+        std::queue<size_t> q;
+        if (x == 0 && board[1][y] == 'O') q.push(n + y);
+        else if (x == m - 1 && board[x-1][y] == 'O') q.push((x-1) * n + y);
+        else if (y == 0 && board[x][y+1] == 'O') q.push(x*n + y + 1);
+        else if (y == n - 1 && board[x][y-1] == 'O') q.push(x*n + y - 1);
+        else { /* Nothing. */ }
+        while (!q.empty()) {
+          size_t x_ = q.front() / n, y_ = q.front() % n;
+          q.pop();
+          if (x_ == 0 || x_ == m - 1 || y_ == 0 || y_ == n - 1 || board[x_][y_] == 'U')
+            continue;
+          board[x_][y_] = 'U';
+          if (board[x_][y_-1] == 'O') q.push(x_*n + y_ - 1);
+          if (board[x_+1][y_] == 'O') q.push((x_+1)*n + y_);
+          if (board[x_][y_+1] == 'O') q.push(x_*n + y_ + 1);
+          if (board[x_-1][y_] == 'O') q.push((x_-1)*n + y_);
+        }
+      }
+      for (size_t i=1; i<m-1; ++i)
+        for (size_t j=1; j<n-1; ++j)
+          if (board[i][j] == 'O')
+            board[i][j] = 'X';
+          else if (board[i][j] == 'U')
+            board[i][j] = 'O';
+      return;
+    }
+};
 
 int main(int argc, char * argv[]) {
-
   if (argc != 1) {
     std::cout << "Please specify the correct arguments." << std::endl;
     return -1;
@@ -150,6 +193,7 @@ int main(int argc, char * argv[]) {
   std::vector<Solution*> solutions;
   Solution0 s0; solutions.push_back(&s0);
   Solution1 s1; solutions.push_back(&s1);
+  Solution2 s2; solutions.push_back(&s2);
   for (size_t si=0; si<solutions.size(); ++si) {
     std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
     for (size_t i=0; i<matrix.size(); ++i)
