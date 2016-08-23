@@ -12,13 +12,14 @@ Return
 ]
 */
 
-// Star: 
+// Star: 9.0.
+// Info.: One-time pass.
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include <cstdlib>
-//#include "..\Profiler.h"
+#include "..\Profiler.h"
 
 class Solution {
   public:
@@ -36,11 +37,12 @@ class Solution0 : public Solution {
     }
   private:
     void backtracking(std::vector<std::vector<std::string> > & rst, std::vector<std::string> & one_pass, std::string & s, size_t begin_idx) {
-      if (begin_idx == s.size()) { rst.push_back(one_pass); one_pass.clear(); }
+      if (begin_idx == s.size()) rst.push_back(one_pass);
       for (size_t length=1; length<=s.size()-begin_idx; ++length)
         if (isPalindrome(s, begin_idx, begin_idx+length)) {
           one_pass.push_back(s.substr(begin_idx, length));
           backtracking(rst, one_pass, s, begin_idx + length);
+          one_pass.pop_back();
         }
     }
     bool isPalindrome(std::string & s, size_t b, size_t e) {
@@ -76,7 +78,7 @@ int main(int argc, char * argv[]) {
   std::vector<std::vector<std::string> > rst;
   for (size_t si=0; si<solutions.size(); ++si) {
     std::cout << "\n\t\t=== Solution " << si << " ===\n" << std::endl;
-    //Profiler perf;
+    Profiler perf;
     rst.clear();
     rst = solutions[si]->partition(s);
     std::cout << "The partitioned palindrome strings are: " << std::endl;
